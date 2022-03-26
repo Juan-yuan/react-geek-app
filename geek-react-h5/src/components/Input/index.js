@@ -6,7 +6,7 @@ export default function Input({extra, onExtraClick, className, ...rest}) {
   return (
     <div className={styles.root}>
         <input className={classNames("input", className)} {...rest} />
-        {extra && <div className="extra" onClick={onExtraClick} >发送验证码</div>}
+        {extra && <div className="extra" onClick={onExtraClick} >{extra}</div>}
     </div>
   )
 }

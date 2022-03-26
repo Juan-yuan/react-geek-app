@@ -8,8 +8,6 @@ export default function App() {
   return (
     <Router>
       <div className="app">
-        {/* <Link to="/login">登录</Link>
-        <Link to="home">首页</Link> */}
           <Suspense fallback={<div>loading...</div>}>
             <Switch>
                 <Redirect exact from="/" to="/home"></Redirect>

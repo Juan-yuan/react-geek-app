@@ -1,36 +1,62 @@
-import React from 'react'
+import React, {useState} from 'react'
 import NavBar from "@/components/NavBar"
 import Input from '@/components/Input'
 import classNames from 'classnames'
 import styles from './index.module.scss'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { sendCode } from '@/store/actions/login'
+import { Toast } from 'antd-mobile'
 
 export default function Login() {
-  const onExtraClick = () => {
-    console.log('哈哈哈')
+  const [time, setTime] = useState(0);
+  const dispatch = useDispatch();
+
+  const onExtraClick = async () => {
+    if(time > 0) return;
+    if(!/^1[3-9]\d{9}$/.test(mobile)){
+      formik.setTouched({
+        mobile: true,
+      })
+      return
+    }
+    try {
+      await dispatch(sendCode(mobile))
+      Toast.success('Get verification code successful!', 1)
+      setTime(60)
+      setInterval(() => {
+        setTime((time) => time - 1)
+      }, 1000)
+    } catch (err) {
+      if(err.response) {
+        Toast.info(err.response.data.message, 1)
+      } else {
+        Toast.info('Please try again.')
+      }
+    }
   }
 
   const formik = useFormik({
     initialValues: {
-      mobile: '1391111111',
-      code: '123456'
+      mobile: '',
+      code: ''
     },
     onSubmit(values) {
       console.log(values)
     },
     validationSchema: Yup.object({
-      mobile: Yup.string().required('手机号不能为空').matches(/^1[3-9]\d{9}$/, '手机号格式错误'),
-      code: Yup.string().required('验证码不能为空').matches(/^\d{6}$/, '验证码格式错误'),
+      mobile: Yup.string().required('Mobile number must be filled!').matches(/^1[3-9]\d{9}$/, 'Incorrect format of mobile number.'),
+      code: Yup.string().required('Verification code must be filled!').matches(/^\d{6}$/, 'Incorrect format of verification code.'),
     })
     // first way to do validate
     // validate(values) {
     //   const errors = {}
     //   if(!values.mobile) {
-    //     errors.mobile = '手机号不能为空'
+    //     errors.mobile = 'Mobile number must be filled!'
     //   }
     //   if(!values.code) {
-    //     errors.code = '手机号不能为空'
+    //     errors.code = 'Verification code must be filled!'
     //   }
     //   return errors
     // }
@@ -46,14 +72,14 @@ export default function Login() {
   } = formik;
   return (
     <div className={styles.root}>
-      <NavBar>登录</NavBar>
+      <NavBar>Login</NavBar>
       <div className="content">
-        <h3>短信登录</h3>
+        <h3>Message Login</h3>
         <form onSubmit={handleSubmit}>
           <div className="input-item">
             <Input 
               name="mobile"
-              placeholder="请输入手机号" 
+              placeholder="Phone number" 
               value={mobile}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -67,8 +93,8 @@ export default function Login() {
           <div className="input-item">
             <Input 
               name="code"
-              placeholder="请输入验证码" 
-              extra="获取验证码" 
+              placeholder="Verification code" 
+              extra={time === 0 ? 'Get verification code' : 'Get after\n' + time + '\n seconds'}
               onExtraClick={onExtraClick} 
               value={code}
               onChange={handleChange}
@@ -81,7 +107,7 @@ export default function Login() {
             : null}
           </div>
           <button type="submit" className={classNames('login-btn', isValid ? '' : 'disabled' )} disabled = {!isValid}>
-            登录
+            Login
           </button>
         </form>
       </div>
