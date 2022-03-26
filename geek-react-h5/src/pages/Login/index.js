@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from "@/components/NavBar"
 import Input from '@/components/Input'
+import classNames from 'classnames'
 import styles from './index.module.scss'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -40,7 +41,8 @@ export default function Login() {
     handleSubmit, 
     handleBlur, 
     touched, 
-    errors 
+    errors,
+    isValid
   } = formik;
   return (
     <div className={styles.root}>
@@ -56,6 +58,7 @@ export default function Login() {
               onChange={handleChange}
               onBlur={handleBlur}
               autoComplete="off"
+              maxLength={11}
             />
             {touched.mobile && errors.mobile ? 
               (<div className="validate">{errors.mobile}</div>)
@@ -71,12 +74,13 @@ export default function Login() {
               onChange={handleChange}
               onBlur={handleBlur}
               autoComplete="off"
+              maxLength={6}
             />
             {touched.code && errors.code ? 
               (<div className="validate">{errors.code}</div>)
             : null}
           </div>
-          <button type="submit" className='login-btn'>
+          <button type="submit" className={classNames('login-btn', isValid ? '' : 'disabled' )} disabled = {!isValid}>
             登录
           </button>
         </form>
