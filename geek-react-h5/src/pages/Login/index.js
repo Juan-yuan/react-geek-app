@@ -1,16 +1,10 @@
 import React from 'react'
-import Icon from "@/components/Icon"
-import "./index.scss"
+import NavBar from "@/components/NavBar"
 
 export default function Login() {
   return (
-    <div>
-      <h1>Login</h1>
-      <Icon 
-        type="icon-renwu-01" 
-        className="big" 
-        onClick={() => console.log('clicked me')} 
-      />
-    </div>
+    <>
+      <NavBar>登录</NavBar>
+    </>
   )
 }

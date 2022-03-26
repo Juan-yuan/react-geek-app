@@ -1,23 +1,23 @@
 import React, { Suspense } from 'react'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import './App.scss'
 const Home = React.lazy(() => import('./pages/Home'))
 const Login = React.lazy(() => import('@/pages/Login'))
 
 export default function App() {
   return (
-    <>
-      <Router>
-        <div>
+    <Router>
+      <div className="app">
+        {/* <Link to="/login">登录</Link>
+        <Link to="home">首页</Link> */}
           <Suspense fallback={<div>loading...</div>}>
-            <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/" element={<Navigate replace to="/home" /> } />
-              <Route path="/login" element={<Login />} />
-            </Routes>
+            <Switch>
+                <Redirect exact from="/" to="/home"></Redirect>
+                <Route path="/login" component={Login}></Route>
+                <Route path="/home" component={Home}></Route>
+            </Switch>
           </Suspense>
-        </div>
-      </Router>
-    </>
+      </div>
+    </Router>
   )
 }

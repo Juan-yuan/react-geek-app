@@ -1,10 +1,15 @@
 const { combineReducers } = require('redux')
 
-function user(state = 0, action) {
+function test(state = 0, action) {
+    return state
+}
+
+function user(state= {name: 'zs'}, action) {
     return state
 }
 
 const reducer = combineReducers({
+    test,
     user
 })
 
