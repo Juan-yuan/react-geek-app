@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import Icon from "@/components/Icon"
 import styles from "./index.module.scss"
-import { withRouter } from 'react-router-dom'
+import { useHistory  } from 'react-router-dom'
 
-function NavBar({children, extra, history}) {
+function NavBar({children, extra}) {
+    const history = useHistory()
     const back = () => {
-        console.log(history)
+        history.go(-1)
     }
     return (
         <div className={styles.root}>
@@ -20,4 +21,4 @@ function NavBar({children, extra, history}) {
     )
 }
 
-export default withRouter(NavBar)
+export default NavBar;
