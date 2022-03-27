@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
-import { sendCode } from '@/store/actions/login'
+import { sendCode, login } from '@/store/actions/login'
 import { Toast } from 'antd-mobile'
 
 export default function Login() {
@@ -50,8 +50,14 @@ export default function Login() {
       mobile: '13519181716',
       code: ''
     },
-    onSubmit(values) {
-      console.log(values)
+    async onSubmit(values) {
+      // dispatch(login(values))
+      try {
+        await dispatch(login(values))
+        Toast.success('Login successful')
+      } catch(err) {
+        Toast.info(err.response?.data.message)
+      }
     },
     validationSchema: Yup.object({
       mobile: Yup.string().required('Mobile number must be filled!').matches(/^1[3-9]\d{9}$/, 'Incorrect format of mobile number.'),
