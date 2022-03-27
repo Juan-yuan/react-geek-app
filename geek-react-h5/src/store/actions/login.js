@@ -8,6 +8,13 @@ export const sendCode = (mobile) => {
         })
     }
 }
+
+export const saveToken = (payload) => {
+    return {
+        type: 'login/token',
+        payload
+    }
+}
 /**
  * login
  * @param {*} data 
@@ -20,5 +27,7 @@ export const login = (data) => {
             url: '/authorizations',
             data
         })
+        // save token to redux
+        dispatch(saveToken(res.data))
     }
 }
