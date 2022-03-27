@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
 import NavBar from "@/components/NavBar"
 import Input from '@/components/Input'
 import classNames from 'classnames'
@@ -13,6 +13,8 @@ export default function Login() {
   const [time, setTime] = useState(0);
   const dispatch = useDispatch();
 
+  const a = useRef(0)
+
   const onExtraClick = async () => {
     if(time > 0) return;
     if(!/^1[3-9]\d{9}$/.test(mobile)){
@@ -25,8 +27,14 @@ export default function Login() {
       await dispatch(sendCode(mobile))
       Toast.success('Get verification code successful!', 1)
       setTime(60)
-      setInterval(() => {
-        setTime((time) => time - 1)
+      let timeId = setInterval(() => {
+        setTime((time) => {
+          if(time === 1) {
+            clearInterval(timeId)
+          }
+          return time - 1   // 可以获取最新的值
+        // setTime(time - 1)    // 引用的外层的 time，所以值会变回 0 开始倒数
+        })
       }, 1000)
     } catch (err) {
       if(err.response) {
@@ -39,7 +47,7 @@ export default function Login() {
 
   const formik = useFormik({
     initialValues: {
-      mobile: '',
+      mobile: '13519181716',
       code: ''
     },
     onSubmit(values) {
