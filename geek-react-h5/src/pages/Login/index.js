@@ -1,4 +1,5 @@
 import React, {useRef, useState} from 'react'
+import { useHistory } from 'react-router-dom'
 import NavBar from "@/components/NavBar"
 import Input from '@/components/Input'
 import classNames from 'classnames'
@@ -12,8 +13,7 @@ import { Toast } from 'antd-mobile'
 export default function Login() {
   const [time, setTime] = useState(0);
   const dispatch = useDispatch();
-
-  const a = useRef(0)
+  const history = useHistory();
 
   const onExtraClick = async () => {
     if(time > 0) return;
@@ -55,6 +55,8 @@ export default function Login() {
       try {
         await dispatch(login(values))
         Toast.success('Login successful')
+        // jump to home page
+        history.push('/home')
       } catch(err) {
         Toast.info(err.response?.data.message)
       }
