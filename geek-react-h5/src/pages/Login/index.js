@@ -1,13 +1,14 @@
 import React, {useRef, useState} from 'react'
+import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
+import classNames from 'classnames'
+import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
+
 import NavBar from "@/components/NavBar"
 import Input from '@/components/Input'
-import classNames from 'classnames'
-import styles from './index.module.scss'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
 import { sendCode, login } from '@/store/actions/login'
+import styles from './index.module.scss'
 import { Toast } from 'antd-mobile'
 
 export default function Login() {

@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import  { setTokenInfo } from '@/utils/storage'
 
 export const sendCode = (mobile) => {
     return async () => {
@@ -29,5 +30,6 @@ export const login = (data) => {
         })
         // save token to redux
         dispatch(saveToken(res.data))
+        setTokenInfo(res.data)
     }
 }
