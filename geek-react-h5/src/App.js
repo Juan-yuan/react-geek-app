@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom'
 import './App.scss'
-const Home = React.lazy(() => import('./pages/Home'))
+const Home = React.lazy(() => import('./pages/Layout'))
 const Login = React.lazy(() => import('@/pages/Login'))
 
 export default function App() {
