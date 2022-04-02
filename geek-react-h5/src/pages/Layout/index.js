@@ -1,9 +1,8 @@
 import React from 'react'
 import Icon from '@/components/Icon'
 import styles from './index.module.scss'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
 import classNames from 'classnames'
-import { Switch, Route } from 'react-router-dom'
 const Home = React.lazy(() => import('@/pages/Home')) 
 const QA = React.lazy(() => import('@/pages/QA')) 
 const Video = React.lazy(() => import('@/pages/Video')) 
@@ -35,16 +34,17 @@ const tabBar = [
 export default function Layout() {
   const history = useHistory()
   const location = useLocation()
-  const params = useParams()
   return (
     <div className={styles.root}>
       <div className="tab-content">
-        <Switch>
-          <Route path="/home" component={Home} exact></Route>
-          <Route path="/home/qa" component={QA}></Route>
-          <Route path="/home/video" component={Video}></Route>
-          <Route path="/home/profile" component={Profile}></Route>
-        </Switch>
+        <React.Suspense fallback={<div>loading...</div>}>
+          <Switch>
+            <Route path="/home" component={Home} exact></Route>
+            <Route path="/home/qa" component={QA}></Route>
+            <Route path="/home/video" component={Video}></Route>
+            <Route path="/home/profile" component={Profile}></Route>
+          </Switch>
+        </React.Suspense>        
       </div>
       <div className="tabbar">
         
