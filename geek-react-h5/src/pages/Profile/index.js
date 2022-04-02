@@ -1,18 +1,27 @@
 import Icon from '@/components/Icon'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import styles from './index.module.scss'
+import { getUser } from '@/store/actions/profile'
 
 const Profile = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
+  // 页面一进入，就需要发送请求，获取用户信息
+  useEffect(() => {
+    dispatch(getUser())
+  },[dispatch])
+  const {photo, name, art_count, follow_count, fans_count, like_count } = useSelector(state => state.profile.user)
 
   return (
     <div className={styles.root}>
       <div className="profile">
         <div className="user-info">
           <div className="avatar">
-            <img src={''} alt="" />
+            <img src={photo} alt="" />
           </div>
-          <div className="user-name"></div>
+          <div className="user-name">{name}</div>
           <Link to="/profile/edit">
             个人信息 <Icon type="iconbtn_right" />
           </Link>
@@ -27,19 +36,19 @@ const Profile = () => {
 
         <div className="count-list">
           <div className="count-item">
-            <p></p>
+            <p>{art_count}</p>
             <p>动态</p>
           </div>
           <div className="count-item">
-            <p></p>
+            <p>{follow_count}</p>
             <p>关注</p>
           </div>
           <div className="count-item">
-            <p></p>
+            <p>{fans_count}</p>
             <p>粉丝</p>
           </div>
           <div className="count-item">
-            <p></p>
+            <p>{like_count}</p>
             <p>被赞</p>
           </div>
         </div>
