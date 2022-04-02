@@ -1,12 +1,18 @@
 import { Toast } from 'antd-mobile'
 import axios from 'axios'
+import { getTokenInfo } from './storage'
 
 const instance = axios.create({
     timeout: 5000,
     baseURL: 'http://geek.itheima.net/v1_0/',
 })
 
-instance.interceptors.request.use(config => {    
+// 配置拦截器
+instance.interceptors.request.use(config => {  
+    const token = getTokenInfo()
+    if(token) {
+        config.headers.Authorization = 'Bearer ' + token
+    }  
     return config
 }, error => {
     return Promise.reject(error)
