@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import NavBar from '@/components/NavBar'
-import { List, DatePicker, Drawer } from 'antd-mobile'
+import { List, DatePicker, Drawer, Toast } from 'antd-mobile'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProfile } from '@/store/actions/profile'
+import { getProfile, updateProfile } from '@/store/actions/profile'
 import classNames from 'classnames'
 import EditInput from './EditInput'
 
@@ -24,6 +24,16 @@ export default function Profile() {
     useEffect(() => {
         dispatch(getProfile())
     }, [dispatch])
+
+    const onCommit = async (type, value) => {
+        await dispatch(
+            updateProfile({
+                [type]: value
+            })
+        )
+        Toast.success('修改成功', 1, null, false)
+        onClose()
+    }
 
     // get profile data from redux
     const profile = useSelector(state => state.profile.profile)
@@ -83,7 +93,7 @@ export default function Profile() {
         {/* Drawer component */}
         <Drawer 
             className="drawer"
-            sidebar={<EditInput onClose={onClose} type={open.type}/>} 
+            sidebar={open.visible && <EditInput onClose={onClose} type={open.type} onCommit={onCommit} />} 
             open={open.visible}
         >{}</Drawer>
     </div>

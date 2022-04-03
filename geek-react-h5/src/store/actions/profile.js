@@ -41,3 +41,10 @@ export const getProfile = () => {
         dispatch(saveProfile(res.data))
     }
 }
+
+export const updateProfile = (data) => {
+    return async dispatch => {
+        await http.patch('/user/profile', data)
+        dispatch(getProfile())
+    }
+}
