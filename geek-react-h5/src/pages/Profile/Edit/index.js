@@ -11,9 +11,15 @@ const { Item } = List
 
 export default function Profile() {
     const dispatch = useDispatch()
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState({
+        visible: false,
+        type: ''
+    })
     const onClose = () => {
-        setOpen(false)
+        setOpen({
+            visible: false,
+            type: '' 
+        })
     }
     useEffect(() => {
         dispatch(getProfile())
@@ -37,11 +43,21 @@ export default function Profile() {
                         } 
                         onClick={() => {}}
                     >头像</Item>
-                    <Item arrow="horizontal" extra={name} onClick={() => {setOpen(true)}} >昵称</Item>
+                    <Item 
+                        arrow="horizontal" 
+                        extra={name} 
+                        onClick={() => {setOpen({
+                            visible: true,
+                            type: 'name'
+                        })}} 
+                    >昵称</Item>
                     <Item 
                         arrow="horizontal" 
                         extra={<span className={classNames('intro', intro ? 'normal' : '')}>{intro || '未填写'}</span>} 
-                        onClick={() => {setOpen(true)}} 
+                        onClick={() => {setOpen({
+                            visible: true,
+                            type: 'intro'
+                        })}} 
                     >简介</Item>
                 </List>
 
@@ -67,8 +83,8 @@ export default function Profile() {
         {/* Drawer component */}
         <Drawer 
             className="drawer"
-            sidebar={<EditInput onClose={onClose}/>} 
-            open={open}
+            sidebar={<EditInput onClose={onClose} type={open.type}/>} 
+            open={open.visible}
         >{}</Drawer>
     </div>
   )
