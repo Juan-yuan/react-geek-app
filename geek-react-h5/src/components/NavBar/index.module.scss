@@ -7,7 +7,7 @@
     height: 46px;
     width: 100%;
     background-color: #fff;
-    @include hairline('bottom');
+    @include hairline('bottom', #ccc);
 
     :global {
         .left {

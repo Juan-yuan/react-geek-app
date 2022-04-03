@@ -11,7 +11,7 @@ function NavBar({children, extra}) {
     return (
         <div className={styles.root}>
         <div className='left'>
-            <Icon type="icon-a-9-zuo" onClick={back} />
+            <Icon type="iconfanhui" onClick={back} />
         </div>
 
         <div className="title">{children}</div>
