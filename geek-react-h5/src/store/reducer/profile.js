@@ -1,4 +1,4 @@
-import { SAVE_USER } from '@/store/action_types/profile'
+import { SAVE_USER, SAVE_PROFILE } from '@/store/action_types/profile'
 
 const initValue = {
     user: {},
@@ -11,6 +11,12 @@ export default function reducer(state = initValue, action) {
         return {
             ...state,
             user: payload,
+        }
+    }
+    if(type === SAVE_PROFILE) {
+        return {
+            ...state,
+            profile: payload,
         }
     }
     return state
