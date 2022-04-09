@@ -27,12 +27,14 @@ export default function EditInput({onClose, type, onCommit}) {
               className="input-wrap" 
               value={value} 
               onChange={e => setValue(e.target.value)}
+              autoFocus
             /> : 
             <Textarea 
               maxLength={200} 
               value={value}
               placehoder="请输入昵称"
               onChange={e => setValue(e.target.value)}
+              autoFocus
             />
           }
         </div>        

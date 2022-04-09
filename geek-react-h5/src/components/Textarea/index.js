@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React, {useEffect, useRef, useState} from 'react'
 import styles from './index.module.scss'
 
-export default function Textarea({maxLength, className, ...rest}) {
+export default function Textarea({maxLength, className, autoFocus, ...rest}) {
     const [value, setValue ] = useState(rest.value || '')
     const onChange = (e) => {
         setValue(e.target.value)
@@ -11,7 +11,9 @@ export default function Textarea({maxLength, className, ...rest}) {
     const testRef = useRef(null);
 
     useEffect(() => {
-        testRef.current.setSelectionRange(-1, -1);
+        if(autoFocus) {
+            testRef.current.setSelectionRange(-1, -1);
+        }
     }, [])
 
   return (
