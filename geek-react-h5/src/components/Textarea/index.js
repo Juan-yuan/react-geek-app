@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import styles from './index.module.scss'
 
 export default function Textarea({maxLength, className, ...rest}) {
@@ -8,6 +8,12 @@ export default function Textarea({maxLength, className, ...rest}) {
         setValue(e.target.value)
         rest.onChange?.(e)
     }
+    const testRef = useRef(null);
+
+    useEffect(() => {
+        testRef.current.setSelectionRange(-1, -1);
+    }, [])
+
   return (
     <div className={styles.root}>
         <textarea 
@@ -16,6 +22,7 @@ export default function Textarea({maxLength, className, ...rest}) {
             {...rest}
             value={value} 
             onChange={onChange}
+            ref={testRef}
         />
 
         <div className="count">
