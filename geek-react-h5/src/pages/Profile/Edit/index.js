@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProfile, updateProfile } from '@/store/actions/profile'
 import classNames from 'classnames'
 import EditInput from './EditInput'
+import EditList from './EditList'
 
 const { Item } = List
 
@@ -15,10 +16,18 @@ export default function Profile() {
         visible: false,
         type: ''
     })
+    const [listOpen, setListOpen] = useState({
+        visible: false,
+        type: ''
+    })
     const onClose = () => {
         setOpen({
             visible: false,
             type: '' 
+        })
+        setListOpen({
+            visible: false,
+            type:''
         })
     }
     useEffect(() => {
@@ -51,7 +60,7 @@ export default function Profile() {
                                 <img src={photo} alt="" />
                             </span>
                         } 
-                        onClick={() => {}}
+                        onClick={() => {setListOpen({visible: true, type:'avatar'})}}
                     >头像</Item>
                     <Item 
                         arrow="horizontal" 
@@ -72,7 +81,7 @@ export default function Profile() {
                 </List>
 
                 <List className='profile-list'>
-                    <Item arrow="horizontal" extra={gender === 0 ? '男' : '女'} onClick={() => {}}>性别</Item>
+                    <Item arrow="horizontal" extra={gender === 0 ? '男' : '女'} onClick={() => {setListOpen({visible: true, type: 'gender'})}}>性别</Item>
                     <DatePicker
                         value={new Date(birthday)}
                         onChange={() => {}}
@@ -90,12 +99,21 @@ export default function Profile() {
             </div>
         </div>
 
-        {/* Drawer component */}
+        {/* Drawer component input & textarea*/}
         <Drawer 
             className="drawer"
             sidebar={open.visible && <EditInput onClose={onClose} type={open.type} onCommit={onCommit} />} 
             open={open.visible}
-        >{}</Drawer>
+        />
+
+        {/* Drawer component image & gender*/}
+        <Drawer
+            className='drawer-list'
+            position="bottom"
+            sidebar={<EditList></EditList>}
+            open={listOpen.visible}
+            onOpenChange={onClose}
+        />
     </div>
   )
 }
