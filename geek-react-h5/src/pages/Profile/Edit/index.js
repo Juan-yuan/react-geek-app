@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from './index.module.scss'
 import NavBar from '@/components/NavBar'
 import { List, DatePicker, Drawer, Toast } from 'antd-mobile'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProfile, updateProfile } from '@/store/actions/profile'
+import { getProfile, updatePhoto, updateProfile } from '@/store/actions/profile'
 import classNames from 'classnames'
 import EditInput from './EditInput'
 import EditList from './EditList'
@@ -12,6 +12,8 @@ const { Item } = List
 
 export default function Profile() {
     const dispatch = useDispatch()
+    const fileRef = useRef()
+
     const [open, setOpen] = useState({
         visible: false,
         type: ''
@@ -60,7 +62,7 @@ export default function Profile() {
             {
                 title: '本地选择',
                 onClick: () => {
-                    console.log('本地选择')
+                    fileRef.current.click()
                 }
             },
         ],
@@ -78,6 +80,17 @@ export default function Profile() {
                 }
             },
         ]
+    }
+
+    const onFileChange = async (e) => {
+        const file = e.target.files[0]
+        const fd = new FormData();
+        // 把文件上传到服务器
+        fd.append('photo', file)
+
+        await dispatch(updatePhoto(fd))
+        Toast.success('修改头像成功')
+        onClose()
     }
   return (
     <div className={styles.root}>
@@ -126,6 +139,7 @@ export default function Profile() {
                     </DatePicker>
                 </List>
             </div>
+            <input type="file" hidden ref={fileRef} onChange={onFileChange} />
             <div className="logout">
                 <button className="btn">退出登录</button>
             </div>

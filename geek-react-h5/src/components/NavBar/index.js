@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Icon from "@/components/Icon"
 import styles from "./index.module.scss"
 import { useHistory  } from 'react-router-dom'

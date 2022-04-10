@@ -48,3 +48,11 @@ export const updateProfile = (data) => {
         dispatch(getProfile())
     }
 }
+export const updatePhoto = (formDate) => {
+    return async (dispatch) => {
+        //http.patch('/user/photo', formDate) upload to database
+        await http.patch('/user/photo', formDate);
+        // dispatch(getProfile) get new iamge from database
+        dispatch(getProfile())
+    }
+}
