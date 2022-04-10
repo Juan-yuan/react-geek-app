@@ -4,6 +4,7 @@ import './App.scss'
 const Home = React.lazy(() => import('@/pages/Layout'))
 const Login = React.lazy(() => import('@/pages/Login'))
 const ProfileEdit = React.lazy(() => import('@/pages/Profile/Edit') )
+const ProfileChat = React.lazy(() =>  import('@/pages/Profile/Chat'))
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
                 <Route path="/login" component={Login}></Route>
                 <Route path="/home" component={Home}></Route>
                 <Route path="/profile/edit" component={ProfileEdit}></Route>
+                <Route path="/profile/chat" component={ProfileChat}></Route>
             </Switch>
           </Suspense>
       </div>
