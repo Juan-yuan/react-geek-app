@@ -32,6 +32,7 @@ export default function Profile() {
     }
     useEffect(() => {
         dispatch(getProfile())
+        dispatch(updateProfile())
     }, [dispatch])
 
     const onCommit = async (type, value) => {
@@ -47,6 +48,37 @@ export default function Profile() {
     // get profile data from redux
     const profile = useSelector(state => state.profile.profile)
     const {photo, birthday, name, intro, gender } = profile
+
+    const config = {
+        avatar: [
+            {
+                title: '拍照',
+                onClick: () => {
+                    console.log('拍照')
+                }
+            },
+            {
+                title: '本地选择',
+                onClick: () => {
+                    console.log('本地选择')
+                }
+            },
+        ],
+        gender : [
+            {
+                title: '男',
+                onClick: () => {
+                    onCommit('gender', 0)
+                }
+            },
+            {
+                title: '女',
+                onClick: () => {
+                    onCommit('gender', 1)
+                }
+            },
+        ]
+    }
   return (
     <div className={styles.root}>
         <div className="edit content">
@@ -110,7 +142,7 @@ export default function Profile() {
         <Drawer
             className='drawer-list'
             position="bottom"
-            sidebar={<EditList></EditList>}
+            sidebar={listOpen.visible && <EditList config={config} onClose={onClose} type={listOpen.type} ></EditList>}
             open={listOpen.visible}
             onOpenChange={onClose}
         />
