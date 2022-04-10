@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react'
 import styles from './index.module.scss'
 import NavBar from '@/components/NavBar'
-import { List, DatePicker, Drawer, Toast } from 'antd-mobile'
+import { List, DatePicker, Drawer, Toast, Modal } from 'antd-mobile'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile, updatePhoto, updateProfile } from '@/store/actions/profile'
+import { logout } from '@/store/actions/login'
 import classNames from 'classnames'
 import EditInput from './EditInput'
 import EditList from './EditList'
 import dayjs from 'dayjs'
+import { useHistory } from 'react-router-dom'
 
 const { Item } = List
 
 export default function Profile() {
     const dispatch = useDispatch()
+    const history = useHistory()
     const fileRef = useRef()
-
     const [open, setOpen] = useState({
         visible: false,
         type: ''
@@ -95,8 +97,16 @@ export default function Profile() {
     }
 
     const onBirthChange = (e) => {
-        console.log(e)
+        // console.log(e)
         onCommit('birthday', dayjs(e).format('YYYY-MM-DD'))
+    }
+
+    const logoutFn = () => {
+        Modal.alert('温馨提示', '你确定要退出吗', [{text: '取消'}, {text: '确定', onPress() {
+            dispatch(logout())
+            Toast.success('退出登录成功', 1)
+            history.push('/login')
+        }}])
     }
   return (
     <div className={styles.root}>
@@ -147,7 +157,7 @@ export default function Profile() {
             </div>
             <input type="file" hidden ref={fileRef} onChange={onFileChange} />
             <div className="logout">
-                <button className="btn">退出登录</button>
+                <button className="btn" onClick={logoutFn}>退出登录</button>
             </div>
         </div>
 
