@@ -7,6 +7,7 @@ import { getProfile, updatePhoto, updateProfile } from '@/store/actions/profile'
 import classNames from 'classnames'
 import EditInput from './EditInput'
 import EditList from './EditList'
+import dayjs from 'dayjs'
 
 const { Item } = List
 
@@ -92,6 +93,11 @@ export default function Profile() {
         Toast.success('修改头像成功')
         onClose()
     }
+
+    const onBirthChange = (e) => {
+        console.log(e)
+        onCommit('birthday', dayjs(e).format('YYYY-MM-DD'))
+    }
   return (
     <div className={styles.root}>
         <div className="edit content">
@@ -129,7 +135,7 @@ export default function Profile() {
                     <Item arrow="horizontal" extra={gender === 0 ? '男' : '女'} onClick={() => {setListOpen({visible: true, type: 'gender'})}}>性别</Item>
                     <DatePicker
                         value={new Date(birthday)}
-                        onChange={() => {}}
+                        onChange={onBirthChange}
                         mode="date"
                         title="选择生日"
                         minDate={new Date('1900-01-01')}
