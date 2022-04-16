@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import * as Yup from 'yup'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import classNames from 'classnames'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
@@ -15,6 +15,7 @@ export default function Login() {
   const [time, setTime] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   const onExtraClick = async () => {
     if(time > 0) return;
@@ -56,8 +57,14 @@ export default function Login() {
       try {
         await dispatch(login(values))
         Toast.success('Login successful')
-        // jump to home page
-        history.push('/home')
+
+        // jump to home page or edit page
+        if (location.from ) {
+          history.push(location.form)
+        } else {
+          history.push('/home')
+        }
+
       } catch(err) {
         Toast.info(err.response?.data.message)
       }
