@@ -1,9 +1,11 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Icon from '@/components/Icon'
 import Input from '@/components/Input'
 import NavBar from '@/components/NavBar'
 import styles from './index.module.scss'
 import { useSelector } from 'react-redux'
+import io from 'socket.io-client'
+import { getTokenInfo } from '@/utils/storage'
 
 const Chat = () => {
     const photo = useSelector(state => state.profile.user.photo)
@@ -11,6 +13,31 @@ const Chat = () => {
         {type: 'robot', text:'亲爱的用户您好，小智同学为您服务。'},
         {type: 'user', text:'你好'}
     ])
+
+    // socket.io的连接
+    useEffect(() => {
+        const client = io('http://geek.itheima.net', {
+            transports: ['websocket'],
+            query: {
+                token: getTokenInfo().token
+            }
+        })
+        client.on('connect', function() {
+            // Toast.info('连接服务器成功，开始聊天吧')
+            setMessageList((messageList) => {
+                return [
+                ...messageList,
+                {type: 'robot', text: '我是小智，有什么想要问我的？'}
+                ]
+            }
+            )
+        })
+        // 组件销毁时关闭socket的连接
+        return () => {
+            client.close()
+        }
+        
+    },[])
 
     return (
         <div className={styles.root}>
