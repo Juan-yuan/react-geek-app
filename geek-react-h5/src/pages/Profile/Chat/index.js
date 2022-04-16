@@ -9,6 +9,7 @@ import { getTokenInfo } from '@/utils/storage'
 
 const Chat = () => {
     const photo = useSelector(state => state.profile.user.photo)
+    const [msg, setMsg] = useState('')
     const [messageList, setMessageList] = useState([
         {type: 'robot', text:'亲爱的用户您好，小智同学为您服务。'},
         {type: 'user', text:'你好'}
@@ -38,6 +39,10 @@ const Chat = () => {
         }
         
     },[])
+
+    const onKeyDown = () => {
+
+    }
 
     return (
         <div className={styles.root}>
@@ -78,9 +83,9 @@ const Chat = () => {
                 <Input
                 className="no-border"
                 placeholder="请描述您的问题"
-                onKeyDown={() => {}}
+                onKeyDown={onKeyDown}
                 value={''}
-                onChange={() => {}}
+                onChange={(e) => setMsg(e.target.value)}
                 />
                 <Icon type="iconbianji" />
             </div>
