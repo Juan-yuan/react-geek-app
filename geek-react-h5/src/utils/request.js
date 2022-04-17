@@ -3,7 +3,7 @@ import axios from 'axios'
 import { getTokenInfo, setTokenInfo } from './storage'
 import history from './history'
 import store from '@/store'
-import { saveToken } from '@/store/actions/login'
+import { saveToken, logout } from '@/store/actions/login'
 
 const baseURL = 'http://geek.itheima.net/v1_0/'
 const instance = axios.create({
@@ -73,8 +73,16 @@ instance.interceptors.response.use(response => {
         setTokenInfo(tokenInfo)
 
         // token 刷新成功后，重新把最开始失败的请求重新发一次
-        return instance(config)
+        return instance(config)   // 返回一个 promise，所以要返回出去
     } catch {
+        store.dispatch(logout())
+        history.push({
+            pathname: '/login',
+            state: {
+                from: history.location.pathname
+            }
+        })
+        Toast.info('The login information is invalid, please log in again~')
        // 刷新token失败 
        return Promise.reject(err)
     }
