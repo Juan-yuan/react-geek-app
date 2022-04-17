@@ -8,8 +8,8 @@ export default function reducer(state = initValue, action) {
     if(type === 'login/token') {
         return payload
     }
-    if(type === 'type/logout') {
-        return payload
+    if(type === 'login/logout') {
+        return {}
     }
     return state
 }

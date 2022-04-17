@@ -1,12 +1,11 @@
 import request from '@/utils/request'
 import  { setTokenInfo, removeTokenInfo } from '@/utils/storage'
-import { LOGOUT } from '../action_types/profile'
 
 export const sendCode = (mobile) => {
     return async () => {
         await request({
             method: 'get',
-            url: `/sms/codes/${mobile}`
+            url: '/sms/codes/'+mobile
         })
     }
 }
@@ -23,7 +22,7 @@ export const saveToken = (payload) => {
  * @returns 
  */
 export const login = (data) => {
-    return async dispatch => {
+    return async (dispatch) => {
         const res = await request({
             method: 'post',
             url: '/authorizations',
@@ -39,10 +38,10 @@ export const login = (data) => {
 export const logout = () => {
     return dispatch => {
         // 移除本地token
-        removeTokenInfo()
+        removeTokenInfo('geek-itcast')
         // 移除redux中的token
         dispatch({
-            type: LOGOUT
+            type: 'login/logout'
         })
     }
 }
