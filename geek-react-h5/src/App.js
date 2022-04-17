@@ -8,6 +8,7 @@ const Home = React.lazy(() => import('@/pages/Layout'))
 const Login = React.lazy(() => import('@/pages/Login'))
 const ProfileEdit = React.lazy(() => import('@/pages/Profile/Edit') )
 const ProfileChat = React.lazy(() =>  import('@/pages/Profile/Chat'))
+const NotFound = React.lazy(() => import('@/pages/NotFound'))
 
 export default function App() {
   return (
@@ -22,6 +23,8 @@ export default function App() {
                 {/* Need Auth */}
                 <AuthRoute path="/profile/edit" component={ProfileEdit}></AuthRoute>
                 <AuthRoute path="/profile/chat" component={ProfileChat}></AuthRoute>
+
+                <Route component={NotFound}></Route>
             </Switch>
           </Suspense>
       </div>
