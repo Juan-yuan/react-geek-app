@@ -3,6 +3,7 @@ import Icon from '@/components/Icon'
 import styles from './index.module.scss'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
 import classNames from 'classnames'
+import AuthRoute from '@/components/AuthRoute'
 const Home = React.lazy(() => import('@/pages/Home')) 
 const QA = React.lazy(() => import('@/pages/QA')) 
 const Video = React.lazy(() => import('@/pages/Video')) 
@@ -42,7 +43,7 @@ export default function Layout() {
             <Route path="/home" component={Home} exact></Route>
             <Route path="/home/qa" component={QA}></Route>
             <Route path="/home/video" component={Video}></Route>
-            <Route path="/home/profile" component={Profile}></Route>
+            <AuthRoute path="/home/profile" component={Profile}></AuthRoute>
           </Switch>
         </React.Suspense>        
       </div>

@@ -60,7 +60,7 @@ export default function Login() {
 
         // jump to home page or edit page
         if (location.from ) {
-          history.push(location.form)
+          history.push(location.from.pathname)
         } else {
           history.push('/home')
         }
