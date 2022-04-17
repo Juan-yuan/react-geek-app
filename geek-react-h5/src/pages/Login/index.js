@@ -59,11 +59,8 @@ export default function Login() {
         Toast.success('Login successful')
 
         // jump to home page or edit page
-        if (location.from ) {
-          history.push(location.from.pathname)
-        } else {
-          history.push('/home')
-        }
+        const pathname = location.state ? location.state.from : '/home'
+        history.replace(pathname)
 
       } catch(err) {
         Toast.info(err.response?.data.message)

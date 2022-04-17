@@ -1,18 +1,21 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, useLocation } from 'react-router-dom'
 import { hasToken } from '@/utils/storage'
 
-export default function index({component: Component, ...rest}) {
+export default function Index({component: Component, ...rest}) {
+    const location = useLocation()
   return (
     <Route 
         {...rest}
-        render={({ location }) => {
+        render={() => {
             if (hasToken()) {
                 return <Component></Component>
             } else {
                 return <Redirect to={{
                     pathname: '/login',
-                    from: location
+                    state: {
+                        from: location.pathname
+                    }
                 }}></Redirect>
             }
         }}
