@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
 export default function Index() {
@@ -10,11 +10,15 @@ export default function Index() {
             setTime(time - 1)
         }, 1000)
         
-        if(time === 0) {
+        return () => {
             clearTimeout(timer)
+        }
+    })
+    useEffect(() => {
+        if( time === 0) {
             history.push('/home')
         }
-    }, [time])
+    }, [time, history])
   return (
     <div>
         <h1>对不起，你访问的内容不存在...</h1>
