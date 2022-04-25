@@ -1,4 +1,5 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
+
 import  { setTokenInfo, removeTokenInfo } from '@/utils/storage'
 
 export const sendCode = (mobile) => {
