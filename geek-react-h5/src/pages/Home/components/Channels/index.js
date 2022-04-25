@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Icon from '@/components/Icon'
 import classnames from 'classnames'
 import { useSelector } from 'react-redux'
@@ -16,29 +17,28 @@ const Channels = ({index, onClick, onChange, onClose}) => {
       // 第二种方法： 使用 lodash 来比较两个数组，获取数组里不重复的值
       return differenceBy(allChannels, userChannels, 'id')
     });
-    // 删除频道
-
-    // 添加频道
 
   // 点击切换频道
   const changeChannel = (i) => {
     onChange(i);
     onClose();
   }
+
+  const [editing, setEditing] = useState(false)
   return (
     <div className={styles.root}>
       <div className="channel-header">
         <Icon type="iconbtn_channel_close" onClick={onClose}/>
       </div>
       <div className="channel-content">
-        <div className="channel-item">
+        <div className={classNames('channel-item',{edit: editing})} >
           <div className="channel-item-header">
             <span className="channel-item-title">我的频道</span>
             <span className="channel-item-title-extra">
-              点击频道
+              点击{editing? '删除':'进入'}频道
             </span>
-            <span className="channel-item-edit" >
-              保存
+            <span className="channel-item-edit" onClick={() => setEditing(!editing)}>
+              {editing? '完成': '编辑'}
             </span>
           </div>
           <div className="channel-list">
