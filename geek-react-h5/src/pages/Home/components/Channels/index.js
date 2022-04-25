@@ -4,7 +4,15 @@ import { useSelector } from 'react-redux'
 import styles from './index.module.scss'
 
 const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
-    const userChannels = useSelector(state => state.home.userChannels)
+    const userChannels = useSelector(state => state.home.userChannels);
+    // 推荐
+    const recommendChannels = useSelector( state => {
+      const { userChannels, allChannels } = state.home;
+      return allChannels.filter(item => {
+        return userChannels.findIndex(v => v.id === item.id) === -1
+      })
+    });
+    console.log('recommendChannels', recommendChannels)
     // 删除频道
 
     // 添加频道
@@ -23,6 +31,7 @@ const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
               点击频道
             </span>
             <span className="channel-item-edit" >
+              保存
             </span>
           </div>
           <div className="channel-list">
@@ -46,6 +55,11 @@ const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
             {/* <span className="channel-item-edit">编辑</span> */}
           </div>
           <div className="channel-list">
+            {
+              recommendChannels.map(item => (
+                <span className="channel-list-item" key={item.id}>+ {item.name}</span>
+              ))
+            }
           </div>
         </div>
       </div>

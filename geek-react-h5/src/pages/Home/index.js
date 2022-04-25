@@ -4,7 +4,7 @@ import styles from './index.module.scss'
 import Tabs from '@/components/Tabs'
 import Icon from '@/components/Icon'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserChannels } from '@/store/actions/home'
+import { getUserChannels, getAllChannels} from '@/store/actions/home'
 import Channels from './components/Channels'
 
 export default function Home() {
@@ -13,11 +13,13 @@ export default function Home() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUserChannels())
+    dispatch(getAllChannels())
   }, [dispatch])
 
   const onClose = () => {
     setOpen(false)
   }
+
 
   const tabs = useSelector(state => state.home.userChannels)
   return (
@@ -32,7 +34,7 @@ export default function Home() {
         className='my-drawer'
         position="left" 
         children={''} 
-        sidebar={<Channels onClose={onClose}></Channels>} 
+        sidebar={open && <Channels onClose={onClose}></Channels>} 
         open={open}
       >
 

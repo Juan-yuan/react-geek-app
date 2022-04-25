@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { hasToken, getLocalChannels, setLocalChannels } from '@/utils/storage';
-import { SAVE_CHANNELS } from '../action_types/home'
+import { SAVE_CHANNELS, SAVE_ALL_CHANNELS } from '../action_types/home'
 
 export const getUserChannels = () => {
     return async dispatch => {
@@ -26,6 +26,21 @@ export const getUserChannels = () => {
 export const saveUserChannels = (payload) => {
     return {
         type: SAVE_CHANNELS,
+        payload
+    }
+}
+
+// action获取所有频道 
+export const getAllChannels = () => {
+    return async dispatch => {
+        const res = await request.get('/channels');
+        dispatch(saveAllChannels(res.data.channels))
+    }
+}
+
+export const saveAllChannels = (payload) => {
+    return {
+        type: SAVE_ALL_CHANNELS,
         payload
     }
 }
