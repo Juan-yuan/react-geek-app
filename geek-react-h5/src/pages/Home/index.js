@@ -9,6 +9,8 @@ import Channels from './components/Channels'
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  // 控制高量
+  const [active, setActive] = useState(0);
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -20,11 +22,15 @@ export default function Home() {
     setOpen(false)
   }
 
+  const changeActive = e => {
+    setActive(e)
+  }
+ 
 
   const tabs = useSelector(state => state.home.userChannels)
   return (
     <div className={styles.root}>
-      <Tabs tabs={tabs}></Tabs>
+      <Tabs tabs={tabs} index={active} onChange={e => {setActive(e)}}></Tabs>
       <div className="tabs-opration">
         <Icon type="iconbtn_search"></Icon>
         <Icon type="iconbtn_channel" onClick={() =>  setOpen(true)}></Icon>
@@ -34,7 +40,7 @@ export default function Home() {
         className='my-drawer'
         position="left" 
         children={''} 
-        sidebar={open && <Channels onClose={onClose}></Channels>} 
+        sidebar={open && <Channels onClose={onClose} index={active} onChange={changeActive}></Channels>} 
         open={open}
       >
       </Drawer>

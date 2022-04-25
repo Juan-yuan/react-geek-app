@@ -3,8 +3,9 @@ import classnames from 'classnames'
 import { useSelector } from 'react-redux'
 import styles from './index.module.scss'
 import differenceBy from 'lodash/differenceBy'
+import classNames from 'classnames'
 
-const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
+const Channels = ({index, onClick, onChange, onClose}) => {
     const userChannels = useSelector(state => state.home.userChannels);
     // 推荐
     const recommendChannels = useSelector( state => {
@@ -20,6 +21,10 @@ const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
     // 添加频道
 
   // 点击切换频道
+  const changeChannel = (i) => {
+    onChange(i);
+    onClose();
+  }
   return (
     <div className={styles.root}>
       <div className="channel-header">
@@ -38,8 +43,8 @@ const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
           </div>
           <div className="channel-list">
               {
-                  userChannels.map( (item) => (
-                      <span className='channel-list-item' key={item.id}>
+                  userChannels.map( (item, i) => (
+                      <span className={classNames('channel-list-item', {selected: index === i} )} key={item.id} onClick={() => changeChannel(i)}>
                           {item.name}
                           <Icon type="iconbtn_tag_close" />
                       </span>
