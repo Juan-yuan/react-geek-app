@@ -2,17 +2,19 @@ import Icon from '@/components/Icon'
 import classnames from 'classnames'
 import { useSelector } from 'react-redux'
 import styles from './index.module.scss'
+import differenceBy from 'lodash/differenceBy'
 
 const Channels = ({tabActiveIndex, onClick, onChannelClick, onClose}) => {
     const userChannels = useSelector(state => state.home.userChannels);
     // 推荐
     const recommendChannels = useSelector( state => {
       const { userChannels, allChannels } = state.home;
-      return allChannels.filter(item => {
-        return userChannels.findIndex(v => v.id === item.id) === -1
-      })
+      // return allChannels.filter(item => {
+      //   return userChannels.findIndex(v => v.id === item.id) === -1
+      // })
+      // 第二种方法： 使用 lodash 来比较两个数组，获取数组里不重复的值
+      return differenceBy(allChannels, userChannels, 'id')
     });
-    console.log('recommendChannels', recommendChannels)
     // 删除频道
 
     // 添加频道

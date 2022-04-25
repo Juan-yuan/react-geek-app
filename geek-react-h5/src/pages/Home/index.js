@@ -37,7 +37,6 @@ export default function Home() {
         sidebar={open && <Channels onClose={onClose}></Channels>} 
         open={open}
       >
-
       </Drawer>
     </div>
   )
