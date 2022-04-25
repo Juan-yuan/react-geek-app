@@ -44,3 +44,40 @@ export const saveAllChannels = (payload) => {
         payload
     }
 }
+
+// 删除频道
+export const delChannel = (channel) => {
+    return async (dispatch, getState) => {
+        const userChannels = getState().home.userChannels
+        if(hasToken()) {
+            dispatch(
+                saveUserChannels(userChannels.filter(item => item.id !== channel.id))
+            )
+        } else {
+            // 没有登录 
+            // 修改本地，修改 redux
+            const result = userChannels.filter(item => item.id !== channel.id);
+            setLocalChannels(result);
+            dispatch(saveUserChannels(result));
+        }
+    }
+}
+
+// 添加频道
+export const addChannel = (channel) => {
+    return async (dispatch, getState) => {
+        const channels = [
+            ...getState().home.userChannels,
+            channel
+        ]
+        if(hasToken()) {
+            await request.patch('/user/channels', {
+                channels: [channel],
+            })
+            dispatch(saveUserChannels(channels))
+        } else {
+            dispatch(saveUserChannels(channels))
+            setLocalChannels(channels)
+        }
+    }
+}
