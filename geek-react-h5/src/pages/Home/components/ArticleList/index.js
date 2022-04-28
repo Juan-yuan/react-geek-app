@@ -2,32 +2,30 @@ import { useState, useEffect } from 'react';
 import ArticleItem from '../ArticleItem';
 import styles from './index.module.scss';
 import request from '@/utils/request'
+import { useDispatch, useSelector } from 'react-redux';
+import { getArticleList } from '@/store/actions/home';
 
 const ArticleList = ({channelId, activeId}) => {
-    const [list, setList] = useState([]);
+    const dispatch = useDispatch()
+    const current = useSelector(state => state.home.articles[channelId]);
 
     useEffect(() => {
-        const fetchDate = async() => {
-            const res = await request({
-                url: '/articles',
-                method: 'get',
-                params: {
-                    channel_id: channelId,
-                    timestamp: Date.now()
-                }
-            })
-            setList(res.data.results)
-        }
+        // 如果该频道有数据，一进来时就不要再发数据
+        if(current) return;
         if(channelId === activeId) {
-            fetchDate()
+            dispatch(getArticleList(channelId, Date.now()))
         }
-    }, [channelId, activeId])
+    }, [channelId, activeId, dispatch])
+
+    
+    // 如果不是当前的 tab，就不渲染
+    if(!current) return null;
 
     return (
         <div className={styles.root}>
             <div className="articles">
                 {
-                    list.map(item => (
+                    current.list.map(item => (
                         <div className="article-item" key={item.art_id}>
                             <ArticleItem article={item} />
                         </div>
