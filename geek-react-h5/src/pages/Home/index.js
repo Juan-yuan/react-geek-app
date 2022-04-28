@@ -34,7 +34,7 @@ export default function Home() {
       <Tabs tabs={tabs} index={active} onChange={changeActive}>
         {
           tabs.map((item) => (
-            <ArticleList key={item.id} channelId={item.id}></ArticleList>
+            <ArticleList key={item.id} channelId={item.id} activeId={tabs[active].id}></ArticleList>
           ))
         }
       </Tabs>
