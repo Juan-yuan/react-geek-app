@@ -6,6 +6,7 @@ import Icon from '@/components/Icon'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserChannels, getAllChannels} from '@/store/actions/home'
 import Channels from './components/Channels'
+import ArticleList from './components/ArticleList'
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -26,11 +27,17 @@ export default function Home() {
     setActive(e)
   }
  
+  const tabs = useSelector(state => state.home.userChannels);
 
-  const tabs = useSelector(state => state.home.userChannels)
   return (
     <div className={styles.root}>
-      <Tabs tabs={tabs} index={active} onChange={e => {setActive(e)}}></Tabs>
+      <Tabs tabs={tabs} index={active} onChange={changeActive}>
+        {
+          tabs.map((item) => (
+            <ArticleList key={item.id} channelId={item.id}></ArticleList>
+          ))
+        }
+      </Tabs>
       <div className="tabs-opration">
         <Icon type="iconbtn_search"></Icon>
         <Icon type="iconbtn_channel" onClick={() =>  setOpen(true)}></Icon>
