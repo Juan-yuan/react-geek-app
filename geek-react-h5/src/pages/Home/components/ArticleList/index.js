@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ArticleItem from '../ArticleItem';
 import styles from './index.module.scss';
 import request from '@/utils/request'
 
 const ArticleList = ({channelId, activeId}) => {
-    console.log( channelId, activeId)
+    const [list, setList] = useState([]);
+
     useEffect(() => {
         const fetchDate = async() => {
             const res = await request({
@@ -15,19 +16,23 @@ const ArticleList = ({channelId, activeId}) => {
                     timestamp: Date.now()
                 }
             })
-            console.log('res', res)
+            setList(res.data.results)
         }
         if(channelId === activeId) {
             fetchDate()
         }
-    }, [])
+    }, [channelId, activeId])
 
     return (
         <div className={styles.root}>
             <div className="articles">
-                <div className="article-item">
-                    <ArticleItem />
-                </div>
+                {
+                    list.map(item => (
+                        <div className="article-item" key={item.art_id}>
+                            <ArticleItem article={item} />
+                        </div>
+                    ))
+                }
             </div>
         </div>
     )

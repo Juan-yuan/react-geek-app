@@ -1,20 +1,32 @@
 import classnames from 'classnames'
 import Icon from '@/components/Icon'
 import styles from './index.module.scss'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/zh-cn'   // 指定导入中文
+dayjs.locale('zh-cn')
+dayjs.extend(relativeTime)
 
 // import { useSelector } from 'react-redux'
 // import { useDispatch } from 'react-redux'
 // import { setMoreAction } from '@/store/actions/home'
 // import { useHistory } from 'react-router'
 
-const ArticleItem = () => {
-  const type = 3
+const ArticleItem = ({article}) => {
+  // const type = 3
 
-  const images = [
-    'http://geek.itheima.net/resources/images/91.jpg',
-    'http://geek.itheima.net/resources/images/3.jpg',
-    'http://geek.itheima.net/resources/images/52.jpg',
-  ]
+  // const images = [
+  //   'http://geek.itheima.net/resources/images/91.jpg',
+  //   'http://geek.itheima.net/resources/images/3.jpg',
+  //   'http://geek.itheima.net/resources/images/52.jpg',
+  // ]
+  const { 
+    cover: { type, images },
+    title,
+    aut_name,
+    comm_count,
+    pubdate
+   } = article
   return (
     <div
       className={styles.root}
@@ -25,7 +37,7 @@ const ArticleItem = () => {
         type === 3 ? 't3' : '',
         type === 0 ? 'none-mt' : '')}
       >
-        <h3>前端js脚本与防止js脚本</h3>
+        <h3>{ title }</h3>
         {type !== 0 && (
           <div className="article-imgs">
             {images.map((item, i) => (
@@ -37,10 +49,10 @@ const ArticleItem = () => {
         )}
       </div>
       <div className={classnames('article-info', type === 0 ? 'none-mt' : '')}>
-        <span>bug制造机器</span>
-        <span>0 评论</span>
+        <span>{aut_name}</span>
+        <span>{comm_count}</span>
         {/* fromNow: 距离现在的时间 */}
-        <span>1年内</span>
+        <span>{dayjs(pubdate).fromNow()}</span>
 
         <span className="close">
           <Icon type="iconbtn_iconbtn_essay_close" />
