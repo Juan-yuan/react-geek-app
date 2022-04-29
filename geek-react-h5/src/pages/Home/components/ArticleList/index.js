@@ -24,14 +24,22 @@ const ArticleList = ({channelId, activeId}) => {
 
     const [hasMore, setHasMore] = useState(true)
     const [loading, setLoading] = useState(false)
-    const loadMore = () => {
-        
+    const loadMore = async () => {        
         if(loading) return
-        setHasMore(true)
-        console.log('需要加载更多数据')
-        setTimeout(() => {
+
+        // 如果没有timestamp，代表没有更多数据,则不需要发送更多请求
+        if(!current.timestamp) {
+            setHasMore(false)
+            return
+        }
+
+        setLoading(true)
+        try {
+            await dispatch(getArticleList(channelId, current.timestamp, true))
+        } finally {
             setLoading(false)
-        }, 2000)
+        }
+        
     }
     
     // 如果不是当前的 tab，就不渲染

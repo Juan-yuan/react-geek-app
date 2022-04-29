@@ -83,20 +83,21 @@ export const addChannel = (channel) => {
 }
 
 // 获取文章列表数据
-export const getArticleList = (channelId, timestamp) => {
+export const getArticleList = (channelId, timestamp, loadMore = false) => {
     return async dispatch => {
         const res = await request({
             url: '/articles',
             method: 'get',
             params: {
                 channel_id: channelId,
-                timestamp: Date.now()
+                timestamp: timestamp
             }
         })
         dispatch(setArticleList({
             channelId,
             timestamp: res.data.pre_timestamp,
-            list: res.data.results
+            list: res.data.results,
+            loadMore
         }))
     }
 }

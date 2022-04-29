@@ -19,13 +19,16 @@ export default function reducer(state = initValue, action) {
                 allChannels: payload
             }
         case SAVE_ARTICLE_LIST:
+            // console.log(payload)
+            // 如果loadMore为true，代码加载更多数据，不应该覆盖，应该追加
+            const {list, timestamp, loadMore, channelId } = payload
             return {
                 ...state,
                 articles: {
                     ...state.articles,
-                    [payload.channelId]: {
-                        timestamp: payload.timestamp,
-                        list: payload.list
+                    [channelId]: {
+                        timestamp: timestamp,
+                        list: loadMore ? [...state.articles[channelId].list, ...list] : list,
                     }
                 }
             }
