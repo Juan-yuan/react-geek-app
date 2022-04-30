@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react'
+import React, { useReducer } from 'react'
 import Child from './Child'
 
 const initialState = { count: 0}
@@ -12,15 +12,18 @@ function reducer(state, action) {
       return state;
   }
 }
+export const Context = React.createContext()
 
 export default function UseReducerDemo() {
     const [state, dispatch] = useReducer(reducer, initialState)
   return (
-    <div>
-        <div>{state.count}</div>
-        <h1>根组件</h1>
-        <hr />
-        <Child state={state} dispatch={dispatch} />
-    </div>
+    <Context.Provider value={{state, dispatch}}>
+      <div>
+          <div>{state.count}</div>
+          <h1>根组件</h1>
+          <hr />
+          <Child state={state} dispatch={dispatch} />
+      </div>
+    </Context.Provider>
   )
 }
