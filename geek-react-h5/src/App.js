@@ -24,8 +24,8 @@ export default function App() {
                 <Route path="/home" component={Home}></Route>
 
                 {/* additional demo for useReducer and redux */}
-                <Route path="/demo" component={UseReducerDemo}></Route>
-                <Route path="/classdemo" component={ClassDemo}></Route>
+                {/* <Route path="/demo" component={UseReducerDemo}></Route>
+                <Route path="/classdemo" component={ClassDemo}></Route> */}
 
                 {/* Need Auth */}
                 <AuthRoute path="/profile/edit" component={ProfileEdit}></AuthRoute>

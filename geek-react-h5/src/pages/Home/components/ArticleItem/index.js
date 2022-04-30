@@ -1,5 +1,6 @@
 import classnames from 'classnames'
 import Icon from '@/components/Icon'
+import Img from '@/components/Image'
 import styles from './index.module.scss'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -7,19 +8,7 @@ import 'dayjs/locale/zh-cn'   // 指定导入中文
 dayjs.locale('zh-cn')
 dayjs.extend(relativeTime)
 
-// import { useSelector } from 'react-redux'
-// import { useDispatch } from 'react-redux'
-// import { setMoreAction } from '@/store/actions/home'
-// import { useHistory } from 'react-router'
-
 const ArticleItem = ({article}) => {
-  // const type = 3
-
-  // const images = [
-  //   'http://geek.itheima.net/resources/images/91.jpg',
-  //   'http://geek.itheima.net/resources/images/3.jpg',
-  //   'http://geek.itheima.net/resources/images/52.jpg',
-  // ]
   const { 
     cover: { type, images },
     title,
@@ -42,7 +31,7 @@ const ArticleItem = ({article}) => {
           <div className="article-imgs">
             {images.map((item, i) => (
               <div className="article-img-wrapper" key={i}>
-                <img src={item} alt="" />
+                <Img src={item} alt="" />
               </div>
             ))}
           </div>
