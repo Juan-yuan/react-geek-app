@@ -2,6 +2,7 @@ import React from 'react'
 import Node from './Node'
 
 export default function Child({state, dispatch}) {
+  console.log('state', state)
     const add = () => {
         dispatch({type: 'add'})
     }

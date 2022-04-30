@@ -11,6 +11,7 @@ const ProfileChat = React.lazy(() =>  import('@/pages/Profile/Chat'))
 const ProfileFeedback = React.lazy(() =>  import('@/pages/Profile/Feedback'))
 const NotFound = React.lazy(() => import('@/pages/NotFound'))
 const UseReducerDemo = React.lazy(() =>  import('@/components/useReducerDemo'))
+const ClassDemo = React.lazy(() =>  import('@/components/useReducerDemo/ClassDemo'))
 
 export default function App() {
   return (
@@ -21,7 +22,10 @@ export default function App() {
                 <Redirect exact from="/" to="/home"></Redirect>
                 <Route path="/login" component={Login}></Route>
                 <Route path="/home" component={Home}></Route>
+
+                {/* additional demo for useReducer and redux */}
                 <Route path="/demo" component={UseReducerDemo}></Route>
+                <Route path="/classdemo" component={ClassDemo}></Route>
 
                 {/* Need Auth */}
                 <AuthRoute path="/profile/edit" component={ProfileEdit}></AuthRoute>
