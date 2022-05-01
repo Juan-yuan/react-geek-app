@@ -5,6 +5,7 @@ import styles from './index.module.scss'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/zh-cn'   // 指定导入中文
+import { useSelector } from 'react-redux'
 dayjs.locale('zh-cn')
 dayjs.extend(relativeTime)
 
@@ -16,6 +17,7 @@ const ArticleItem = ({article}) => {
     comm_count,
     pubdate
    } = article
+   const isLogin = useSelector((state) => !!state.login.token)
   return (
     <div
       className={styles.root}
@@ -44,7 +46,9 @@ const ArticleItem = ({article}) => {
         <span>{dayjs(pubdate).fromNow()}</span>
 
         <span className="close">
-          <Icon type="iconbtn_iconbtn_essay_close" />
+          {
+            isLogin && <Icon type="iconbtn_essay_close" />
+          }
         </span>
       </div>
     </div>

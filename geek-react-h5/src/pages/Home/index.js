@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUserChannels, getAllChannels} from '@/store/actions/home'
 import Channels from './components/Channels'
 import ArticleList from './components/ArticleList'
+import MoreAction from './components/MoreAction'
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -51,6 +52,7 @@ export default function Home() {
         open={open}
       >
       </Drawer>
+      <MoreAction />
     </div>
   )
 }
