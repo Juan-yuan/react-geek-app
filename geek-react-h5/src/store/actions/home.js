@@ -118,7 +118,7 @@ export const setMoreAction = (payload) => {
 
 export const unLikeArticle = (articleId, loadMore = false) => {
     return async (dispatch, getState) => {
-        const res = await request({
+        await request({
             method: 'post',
             url: '/article/dislikes',
             data: {
@@ -126,6 +126,29 @@ export const unLikeArticle = (articleId, loadMore = false) => {
             }
         })
         const channelId = getState().home.moreAction.articleId
+        const articles = getState().home.articles[channelId]
+        dispatch(
+            setArticleList({
+                channelId,
+                timestamp: articles.timestamp,
+                list: articles.list.filter((item) => item.art_id !== articleId),
+                loadMore
+            })
+        )
+    }
+}
+
+export const reportArticle = (articleId, reportId, loadMore = false) => {
+    return async (dispatch, getState) => {
+        await request({
+            method: 'post',
+            url: '/article/reports',
+            data: {
+                target: articleId,
+                type: reportId
+            }
+        })
+        const channelId = getState().home.moreAction.channelId
         const articles = getState().home.articles[channelId]
         dispatch(
             setArticleList({

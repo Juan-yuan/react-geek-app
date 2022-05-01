@@ -1,5 +1,5 @@
 import Icon from '@/components/Icon'
-import { setMoreAction, unLikeArticle } from '@/store/actions/home'
+import { setMoreAction, unLikeArticle, reportArticle } from '@/store/actions/home'
 import { Modal, Toast } from 'antd-mobile'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,20 +10,38 @@ const MoreAction = () => {
   // junk / normal
   const [feedbackType, setFeedbackType] = useState('normal')
   const dispatch = useDispatch()
-  
   const moreAction = useSelector((state) => state.home.moreAction)
 
+  const list = [
+    {id: 0, title:'其他问题'},
+    {id: 1, title:'标题夸张'},
+    {id: 2, title:'低俗色情'},
+    {id: 3, title:'错别字多'},
+    {id: 4, title:'旧闻重复'},
+    {id: 5, title:'广告软文'},
+    {id: 6, title:'内容不实'},
+    {id: 7, title:'涉嫌违法犯罪'},
+    {id: 8, title:'侵权'},
+  ]
+
   const onClose = () => {
+    setFeedbackType('normal')
     dispatch(setMoreAction({
       visible: false,
-      articleId: 0,
+      articleId: '',
     }))
   }
 
   const unLike = async () => {
     dispatch(unLikeArticle(moreAction.articleId))
     onClose()
-    Toast.info('拉黑成功~')
+    Toast.info('取消成功~')
+  }
+
+  const report = async (id) => {
+    await dispatch(reportArticle(moreAction.articleId, id))
+    onClose()
+    Toast.info('举报成功~')
   }
 
   return (
@@ -66,14 +84,9 @@ const MoreAction = () => {
                 <Icon type="iconfanhui" />
                 <span className="back-text">反馈垃圾内容</span>
               </div>
-              <div className="action-item">旧闻重复</div>
-              <div className="action-item">广告软文</div>
-              <div className="action-item">内容不实</div>
-              <div className="action-item">涉嫌违法</div>
-              <div className="action-item">
-                <span className="text">其他问题</span>
-                <Icon type="iconbtn_right" />
-              </div>
+              {list.map((item) => (
+                <div key={item.id} className="action-item" onClick={() => report(item.id)}>{item.title}</div>
+              ))}
             </>
           )}
         </div>
