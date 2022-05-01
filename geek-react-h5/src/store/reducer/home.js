@@ -2,7 +2,11 @@ import { SAVE_CHANNELS, SAVE_ALL_CHANNELS, SAVE_ARTICLE_LIST } from '@/store/act
 const initValue = {
     userChannels: [],
     allChannels: [],
-    articles: {}
+    articles: {},
+    moreAction: {
+        visible: false,
+        articleId: ''
+    }
 }
 
 export default function reducer(state = initValue, action) {
@@ -32,6 +36,13 @@ export default function reducer(state = initValue, action) {
                     }
                 }
             }
+        case 'home/setMoreAction': {
+            return {
+                ...state,
+                moreAction: payload
+            }
+        }
+            
         default:
             return state;            
     }

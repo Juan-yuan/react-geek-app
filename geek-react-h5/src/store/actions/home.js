@@ -108,3 +108,10 @@ export const setArticleList = (payload) => {
         payload
     }
 }
+
+export const setMoreAction = (payload) => {
+    return {
+        type: 'home/setMoreAction',
+        payload
+    }
+}

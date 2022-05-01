@@ -5,7 +5,8 @@ import styles from './index.module.scss'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/zh-cn'   // 指定导入中文
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setMoreAction } from '@/store/actions/home'
 dayjs.locale('zh-cn')
 dayjs.extend(relativeTime)
 
@@ -18,6 +19,7 @@ const ArticleItem = ({article}) => {
     pubdate
    } = article
    const isLogin = useSelector((state) => !!state.login.token)
+   const dispatch = useDispatch()
   return (
     <div
       className={styles.root}
@@ -47,7 +49,10 @@ const ArticleItem = ({article}) => {
 
         <span className="close">
           {
-            isLogin && <Icon type="iconbtn_essay_close" />
+            isLogin && <Icon type="iconbtn_essay_close" onClick={() => dispatch(setMoreAction({
+              visible: true,
+              articleId: article.art_id
+            }))} />
           }
         </span>
       </div>

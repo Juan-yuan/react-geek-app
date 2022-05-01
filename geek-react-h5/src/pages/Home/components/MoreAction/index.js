@@ -1,4 +1,5 @@
 import Icon from '@/components/Icon'
+import { setMoreAction } from '@/store/actions/home'
 import { Modal } from 'antd-mobile'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,8 +9,15 @@ import styles from './index.module.scss'
 const MoreAction = () => {
   // junk / normal
   const [feedbackType, setFeedbackType] = useState('normal')
+  const dispatch = useDispatch()
+  
+  const moreAction = useSelector((state) => state.home.moreAction)
 
   const onClose = () => {
+    dispatch(setMoreAction({
+      visible: false,
+      articleId: ''
+    }))
   }
 
   return (
@@ -19,7 +27,7 @@ const MoreAction = () => {
         footer={[]}
         transparent
         maskClosable
-        // visible={true}
+        visible={moreAction.visible}
         onClose={onClose}
         className="more-action-modal"
       >
