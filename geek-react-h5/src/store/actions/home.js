@@ -115,3 +115,25 @@ export const setMoreAction = (payload) => {
         payload
     }
 }
+
+export const unLikeArticle = (articleId, loadMore = false) => {
+    return async (dispatch, getState) => {
+        const res = await request({
+            method: 'post',
+            url: '/article/dislikes',
+            data: {
+                target: articleId
+            }
+        })
+        const channelId = getState().home.moreAction.articleId
+        const articles = getState().home.articles[channelId]
+        dispatch(
+            setArticleList({
+                channelId,
+                timestamp: articles.timestamp,
+                list: articles.list.filter((item) => item.art_id !== articleId),
+                loadMore
+            })
+        )
+    }
+}

@@ -10,7 +10,7 @@ import { setMoreAction } from '@/store/actions/home'
 dayjs.locale('zh-cn')
 dayjs.extend(relativeTime)
 
-const ArticleItem = ({article}) => {
+const ArticleItem = ({article, channelId}) => {
   const { 
     cover: { type, images },
     title,
@@ -51,7 +51,9 @@ const ArticleItem = ({article}) => {
           {
             isLogin && <Icon type="iconbtn_essay_close" onClick={() => dispatch(setMoreAction({
               visible: true,
-              articleId: article.art_id
+              articleId: article.art_id, 
+              channelId,
+              loadMore: false
             }))} />
           }
         </span>

@@ -1,6 +1,6 @@
 import Icon from '@/components/Icon'
-import { setMoreAction } from '@/store/actions/home'
-import { Modal } from 'antd-mobile'
+import { setMoreAction, unLikeArticle } from '@/store/actions/home'
+import { Modal, Toast } from 'antd-mobile'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.scss'
@@ -16,8 +16,14 @@ const MoreAction = () => {
   const onClose = () => {
     dispatch(setMoreAction({
       visible: false,
-      articleId: ''
+      articleId: 0,
     }))
+  }
+
+  const unLike = async () => {
+    dispatch(unLikeArticle(moreAction.articleId))
+    onClose()
+    Toast.info('拉黑成功~')
   }
 
   return (
@@ -35,7 +41,7 @@ const MoreAction = () => {
           {feedbackType === 'normal' ? (
             <>
               <div className="action-item">
-                <Icon type="iconicon_unenjoy1" />
+                <Icon type="iconicon_unenjoy1" onClick={unLike} />
                 不感兴趣
               </div>
               <div

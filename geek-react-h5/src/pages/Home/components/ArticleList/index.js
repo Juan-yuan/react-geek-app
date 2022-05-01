@@ -52,7 +52,7 @@ const ArticleList = ({channelId, activeId}) => {
                     {
                         current.list.map(item => (
                             <div className="article-item" key={item.art_id}>
-                                <ArticleItem article={item} />
+                                <ArticleItem channelId={channelId} article={item} />
                             </div>
                         ))
                     }

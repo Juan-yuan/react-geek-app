@@ -5,7 +5,8 @@ const initValue = {
     articles: {},
     moreAction: {
         visible: false,
-        articleId: ''
+        articleId: '',
+        channelId: '',
     }
 }
 
