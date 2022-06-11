@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Icon from '@/components/Icon'
-import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.scss'
 import differenceBy from 'lodash/differenceBy'

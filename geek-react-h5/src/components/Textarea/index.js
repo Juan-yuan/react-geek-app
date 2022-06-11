@@ -14,7 +14,7 @@ export default function Textarea({maxLength, className, autoFocus, ...rest}) {
         if(autoFocus) {
             testRef.current.setSelectionRange(-1, -1);
         }
-    }, [])
+    }, [autoFocus])
 
   return (
     <div className={styles.root}>

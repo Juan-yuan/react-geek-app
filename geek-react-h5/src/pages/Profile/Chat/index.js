@@ -84,7 +84,6 @@ const Chat = () => {
                                 </div>
                             )
                         } else {
-                            {/* 用户的消息 */}
                             return (
                                 <div className="chat-item user" key={index}>
                                     <img src={photo || 'http://toutiao.itheima.net/images/user_head.jpg'} alt="" />

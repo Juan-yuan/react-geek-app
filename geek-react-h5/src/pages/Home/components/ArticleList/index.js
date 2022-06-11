@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ArticleItem from '../ArticleItem';
 import styles from './index.module.scss';
-import request from '@/utils/request';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticleList } from '@/store/actions/home';
 import { PullToRefresh, InfiniteScroll} from 'antd-mobile-v5';
@@ -16,7 +15,7 @@ const ArticleList = ({channelId, activeId}) => {
         if(channelId === activeId) {
             dispatch(getArticleList(channelId, Date.now()))
         }
-    }, [channelId, activeId, dispatch])
+    }, [channelId, activeId, dispatch, current])
 
     const onRefresh = async () => {
         await dispatch(getArticleList(channelId, Date.now()))

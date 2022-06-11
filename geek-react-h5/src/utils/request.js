@@ -40,7 +40,7 @@ instance.interceptors.response.use(response => {
 
     // 3. 网络没问题，且是 401， token失效的问题
     // 1. 判断有没有刷新 token
-    const {token, refresh_token} = getTokenInfo()
+    const { refresh_token} = getTokenInfo()
     if(!refresh_token) {
         // 没有token，跳转到登录页
         history.push({

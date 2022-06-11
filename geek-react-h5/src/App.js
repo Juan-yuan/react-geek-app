@@ -10,8 +10,8 @@ const ProfileEdit = React.lazy(() => import('@/pages/Profile/Edit') )
 const ProfileChat = React.lazy(() =>  import('@/pages/Profile/Chat'))
 const ProfileFeedback = React.lazy(() =>  import('@/pages/Profile/Feedback'))
 const NotFound = React.lazy(() => import('@/pages/NotFound'))
-const UseReducerDemo = React.lazy(() =>  import('@/components/useReducerDemo'))
-const ClassDemo = React.lazy(() =>  import('@/components/useReducerDemo/ClassDemo'))
+// const UseReducerDemo = React.lazy(() =>  import('@/components/useReducerDemo'))
+// const ClassDemo = React.lazy(() =>  import('@/components/useReducerDemo/ClassDemo'))
 
 export default function App() {
   return (
