@@ -2,12 +2,24 @@ import React, { useEffect, useRef } from 'react'
 import styles from './index.module.scss'
 import classNames from 'classnames'
 
-export default function Input({extra, onExtraClick, autoFocus, className, ...rest}) {
-  const inputRef = useRef(null);
+type Props = {
+  extra?: string
+  onExtraClick?: () => void
+  className?: string
+  autoFocus?: boolean
+}
+export default function Input({
+  extra, 
+  onExtraClick, 
+  autoFocus, 
+  className, 
+  ...rest
+}: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if(autoFocus) {
-      inputRef.current.focus()
+      inputRef.current!.focus()
     }
   },[autoFocus])
 
