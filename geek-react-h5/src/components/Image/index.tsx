@@ -6,8 +6,13 @@ import Icon from '../Icon'
 
 import styles from './index.module.scss'
 
-const Img = memo(({ className, src, alt }) => {
-  const imgRef = useRef(null)
+type Props = {
+  className?: string
+  src: string
+  alt?: string
+}
+const Img = memo(({ className, src, alt }: Props) => {
+  const imgRef = useRef<HTMLImageElement>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
@@ -21,13 +26,14 @@ const Img = memo(({ className, src, alt }) => {
   }
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([{isIntersecting}]) => {
+    const current = imgRef.current!
+    const observer = new IntersectionObserver(([{isIntersecting}]) => {   
       if(isIntersecting) {
-        imgRef.current.src = imgRef.current.dataset.src
-        observer.unobserve(imgRef.current)
+        current.src = current.dataset.src!
+        observer.unobserve(current)
       }
     })
-    observer.observe(imgRef.current)
+    observer.observe(current)
   }, [])
 
   return (
