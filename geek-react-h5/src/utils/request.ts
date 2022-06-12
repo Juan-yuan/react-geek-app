@@ -1,5 +1,5 @@
 import { Toast } from 'antd-mobile'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { getTokenInfo, setTokenInfo } from './storage'
 import history from './history'
 import store from '@/store'
@@ -15,7 +15,7 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {  
     const token = getTokenInfo().token
     if(token) {
-        config.headers.Authorization = 'Bearer ' + token
+        config.headers!.Authorization = 'Bearer ' + token
     }  
     return config
 }, error => {
@@ -24,7 +24,7 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(response => {
     return response.data
-}, async (err) => {
+}, async (err: AxiosError) => {
     // 1. 如果因为网络原因，response没有，给消息提示
     if(!err.response) {
         Toast.info('Please try again')
