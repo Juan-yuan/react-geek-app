@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import styles from './index.module.scss'
 import NavBar from '@/components/NavBar'
 import Textarea from '@/components/Textarea'

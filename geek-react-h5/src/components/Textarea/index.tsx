@@ -1,18 +1,25 @@
 import classNames from 'classnames'
-import React, {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import styles from './index.module.scss'
 
-export default function Textarea({maxLength, className, autoFocus, ...rest}) {
+type Props = {
+    maxLength?: number
+    className?: string
+    value?: string
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+    autoFocus?: boolean
+}
+export default function Textarea({maxLength = 100, className, autoFocus, ...rest}: Props) {
     const [value, setValue ] = useState(rest.value || '')
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value)
         rest.onChange?.(e)
     }
-    const testRef = useRef(null);
+    const testRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         if(autoFocus) {
-            testRef.current.setSelectionRange(-1, -1);
+            testRef.current!.setSelectionRange(-1, -1);
         }
     }, [autoFocus])
 
@@ -33,3 +40,4 @@ export default function Textarea({maxLength, className, autoFocus, ...rest}) {
     </div>
   )
 }
+
