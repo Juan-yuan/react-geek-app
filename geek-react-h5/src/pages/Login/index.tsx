@@ -15,7 +15,7 @@ export default function Login() {
   const [time, setTime] = useState(0);
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<{from: string}>();
 
   const onExtraClick = async () => {
     if(time > 0) return;
@@ -38,7 +38,7 @@ export default function Login() {
         // setTime(time - 1)    // 引用的外层的 time，所以值会变回 0 开始倒数
         })
       }, 1000)
-    } catch (err) {
+    } catch (err: any) {
       if(err.response) {
         Toast.info(err.response.data.message, 1)
       } else {
@@ -62,7 +62,7 @@ export default function Login() {
         const pathname = location.state ? location.state.from : '/home'
         history.replace(pathname)
 
-      } catch(err) {
+      } catch(err: any) {
         Toast.info(err.response?.data.message)
       }
     },
