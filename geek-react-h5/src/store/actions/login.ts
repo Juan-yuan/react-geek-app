@@ -1,8 +1,9 @@
 import request from '@/utils/request';
+import { Dispatch } from 'redux';
 
 import  { setTokenInfo, removeTokenInfo } from '@/utils/storage'
 
-export const sendCode = (mobile) => {
+export const sendCode = (mobile: string) => {
     return async () => {
         await request({
             method: 'get',
@@ -11,7 +12,12 @@ export const sendCode = (mobile) => {
     }
 }
 
-export const saveToken = (payload) => {
+type Token = {
+    token: string
+    refresh_token: string
+}
+
+export const saveToken = (payload: Token) => {
     return {
         type: 'login/token',
         payload
@@ -22,8 +28,8 @@ export const saveToken = (payload) => {
  * @param {*} data 
  * @returns 
  */
-export const login = (data) => {
-    return async (dispatch) => {
+export const login = (data: {mobile: string, code: string }) => {
+    return async (dispatch: Dispatch) => {
         const res = await request({
             method: 'post',
             url: '/authorizations',
@@ -37,7 +43,7 @@ export const login = (data) => {
 
 // logout
 export const logout = () => {
-    return dispatch => {
+    return (dispatch: Dispatch) => {
         // 移除本地token
         removeTokenInfo('geek-itcast')
         // 移除redux中的token

@@ -21,7 +21,7 @@ export const setTokenInfo = (tokenInfo: Token) => {
 }
 
 // remove token
-export const removeTokenInfo = () => {
+export const removeTokenInfo = (TOKEN_KEY: string) => {
     return localStorage.removeItem(TOKEN_KEY)
 }
 
