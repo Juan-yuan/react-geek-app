@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import styles from './index.module.scss'
 import { getUser } from '@/store/actions/profile'
+import { RootState } from '@/store'
 
 const Profile = () => {
   const history = useHistory()
@@ -12,7 +13,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getUser())
   },[dispatch])
-  const {photo, name, art_count, follow_count, fans_count, like_count } = useSelector(state => state.profile.user)
+  const {photo, name, art_count, follow_count, fans_count, like_count } = useSelector((state: RootState) => state.profile.user)
 
   return (
     <div className={styles.root}>

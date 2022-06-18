@@ -1,5 +1,4 @@
 import http from '@/utils/request'
-import { SAVE_USER, SAVE_PROFILE } from '@/store/action_types/profile'
 import { User, Profile, ProfileAction } from '../reducer/profile'
 import { Dispatch } from 'redux'
 
