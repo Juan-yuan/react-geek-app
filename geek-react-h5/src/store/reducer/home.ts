@@ -1,5 +1,3 @@
-import { SAVE_CHANNELS, SAVE_ALL_CHANNELS, SAVE_ARTICLE_LIST } from '@/store/action_types/home'
-
 export type Channel = {
     id: number
     name: string

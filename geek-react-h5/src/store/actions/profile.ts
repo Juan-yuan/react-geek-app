@@ -1,6 +1,5 @@
 import http from '@/utils/request'
 import { User, Profile, ProfileAction } from '../reducer/profile'
-import { Dispatch } from 'redux'
 import { RootThunkAction } from '..'
 
 /**

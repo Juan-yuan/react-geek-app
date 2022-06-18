@@ -1,7 +1,5 @@
 import request from '@/utils/request';
 import { hasToken, getLocalChannels, setLocalChannels } from '@/utils/storage';
-import { Dispatch } from 'redux';
-import { SAVE_CHANNELS, SAVE_ALL_CHANNELS, SAVE_ARTICLE_LIST } from '../action_types/home';
 import { Channel, HomeAction, ArticlePayload, MoreAction } from '../reducer/home'
 import { RootThunkAction } from '..'
 
