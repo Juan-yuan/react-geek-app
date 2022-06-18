@@ -1,6 +1,6 @@
 // import { SAVE_USER, SAVE_PROFILE } from '@/store/action_types/profile'
 
-type User = {
+export type User = {
     id: string
     name: string
     photo: string
@@ -10,7 +10,7 @@ type User = {
     like_count: number
 }
 
-type Profile = {
+export type Profile = {
     id: string
     photo: string
     mobile: string
@@ -23,7 +23,7 @@ type InitType = {
     profile: Profile
 }
 
-type ProfileAction = {
+export type ProfileAction = {
     type: 'profile/user',
     payload: User
 } | {
