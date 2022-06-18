@@ -1,17 +1,17 @@
 import { SAVE_CHANNELS, SAVE_ALL_CHANNELS, SAVE_ARTICLE_LIST } from '@/store/action_types/home'
 
-type Channel = {
+export type Channel = {
     id: number
     name: string
 }
 
-type MoreAction = {
+export type MoreAction = {
     visible: boolean
     articleId: string
     channelId: number
 }
 
-type Ariticle = {
+export type Ariticle = {
     art_id: string
     title: string
     aut_id: string
@@ -24,7 +24,7 @@ type Ariticle = {
     }
 }
 
-type Articles = {
+export type Articles = {
     [index: number]: {
         timestamp: string
         list: Ariticle[]
@@ -37,7 +37,7 @@ type HomeType = {
     moreAction: MoreAction
     articles: Articles
 }
-const initValue:HomeType = {
+const initValue: HomeType = {
     userChannels: [],
     allChannels: [],
     articles: {},
@@ -48,7 +48,7 @@ const initValue:HomeType = {
     }
 } as HomeType
 
-type ActionType = {
+export type HomeAction = {
     type: 'home/saveChannels',
     payload: Channel[]
 } | {
@@ -56,17 +56,20 @@ type ActionType = {
     payload: Channel[]
 } | {
     type: 'home/saveArticleList',
-    payload: {
-        channelId: number
-        timestamp: string
-        loadMore: boolean
-        list: Ariticle[]
-    }
+    payload: ArticlePayload
 } | {
     type: 'home/setMoreAction',
     payload: MoreAction
 }
-export default function reducer(state = initValue, action: ActionType) {
+
+export type ArticlePayload = {
+    channelId: number
+    timestamp: string
+    loadMore: boolean
+    list: Ariticle[]
+}
+
+export default function reducer(state = initValue, action: HomeAction) {
     switch(action.type) {
         case 'home/saveChannels':
             return {

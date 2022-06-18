@@ -1,10 +1,13 @@
 import request from '@/utils/request';
 import { hasToken, getLocalChannels, setLocalChannels } from '@/utils/storage';
+import { Dispatch } from 'redux';
 import { SAVE_CHANNELS, SAVE_ALL_CHANNELS, SAVE_ARTICLE_LIST } from '../action_types/home';
+import { Channel, HomeAction, ArticlePayload, MoreAction } from '../reducer/home'
+import { RootThunkAction } from '..'
 
-export const getUserChannels = () => {
-    return async dispatch => {
-        if(hasToken) {
+export const getUserChannels = ():RootThunkAction => {
+    return async (dispatch) => {
+        if(hasToken()) {
             const res = await request.get('/user/channels');
             dispatch(saveUserChannels(res.data.channels));
         } else {
@@ -23,30 +26,30 @@ export const getUserChannels = () => {
     }
 }
 
-export const saveUserChannels = (payload) => {
+export const saveUserChannels = (payload: Channel[]): HomeAction => {
     return {
-        type: SAVE_CHANNELS,
+        type: 'home/saveChannels',
         payload
     }
 }
 
 // action获取所有频道 
-export const getAllChannels = () => {
-    return async dispatch => {
+export const getAllChannels = ():RootThunkAction => {
+    return async (dispatch) => {
         const res = await request.get('/channels');
         dispatch(saveAllChannels(res.data.channels))
     }
 }
 
-export const saveAllChannels = (payload) => {
+export const saveAllChannels = (payload: Channel[]): HomeAction => {
     return {
-        type: SAVE_ALL_CHANNELS,
+        type: 'home/saveAllChannels',
         payload
     }
 }
 
 // 删除频道
-export const delChannel = (channel) => {
+export const delChannel = (channel: Channel):RootThunkAction => {
     return async (dispatch, getState) => {
         const userChannels = getState().home.userChannels
         if(hasToken()) {
@@ -64,7 +67,7 @@ export const delChannel = (channel) => {
 }
 
 // 添加频道
-export const addChannel = (channel) => {
+export const addChannel = (channel: Channel):RootThunkAction => {
     return async (dispatch, getState) => {
         const channels = [
             ...getState().home.userChannels,
@@ -83,8 +86,8 @@ export const addChannel = (channel) => {
 }
 
 // 获取文章列表数据
-export const getArticleList = (channelId, timestamp, loadMore = false) => {
-    return async dispatch => {
+export const getArticleList = (channelId:number, timestamp: string, loadMore = false):RootThunkAction => {
+    return async (dispatch) => {
         const res = await request({
             url: '/articles',
             method: 'get',
@@ -102,21 +105,21 @@ export const getArticleList = (channelId, timestamp, loadMore = false) => {
     }
 }
 
-export const setArticleList = (payload) => {
+export const setArticleList = (payload: ArticlePayload): HomeAction => {
     return {
-        type: SAVE_ARTICLE_LIST,
+        type: 'home/saveArticleList',
         payload
     }
 }
 
-export const setMoreAction = (payload) => {
+export const setMoreAction = (payload: MoreAction): HomeAction => {
     return {
         type: 'home/setMoreAction',
         payload
     }
 }
 
-export const unLikeArticle = (articleId, loadMore = false) => {
+export const unLikeArticle = (articleId: string, loadMore = false): RootThunkAction => {
     return async (dispatch, getState) => {
         await request({
             method: 'post',
@@ -125,7 +128,7 @@ export const unLikeArticle = (articleId, loadMore = false) => {
                 target: articleId
             }
         })
-        const channelId = getState().home.moreAction.articleId
+        const channelId = Number(getState().home.moreAction.articleId)
         const articles = getState().home.articles[channelId]
         dispatch(
             setArticleList({
@@ -138,7 +141,7 @@ export const unLikeArticle = (articleId, loadMore = false) => {
     }
 }
 
-export const reportArticle = (articleId, reportId, loadMore = false) => {
+export const reportArticle = (articleId: number, reportId: number, loadMore = false) :RootThunkAction => {
     return async (dispatch, getState) => {
         await request({
             method: 'post',
@@ -154,7 +157,7 @@ export const reportArticle = (articleId, reportId, loadMore = false) => {
             setArticleList({
                 channelId,
                 timestamp: articles.timestamp,
-                list: articles.list.filter((item) => item.art_id !== articleId),
+                list: articles.list.filter((item) => Number(item.art_id) !== articleId),
                 loadMore
             })
         )

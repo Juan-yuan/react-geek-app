@@ -2,7 +2,7 @@ const TOKEN_KEY = 'geek-itcast'
 const CHANNEL_KEY = 'geek-itcast-21-channels'
 
 // get token
-export const getTokenInfo = (): Token => {
+export const getTokenInfo = () => {
     return JSON.parse(localStorage.getItem(TOKEN_KEY)!) || {}
 }
 
@@ -21,7 +21,7 @@ export const setTokenInfo = (tokenInfo: Token) => {
 }
 
 // remove token
-export const removeTokenInfo = (TOKEN_KEY: string) => {
+export const removeTokenInfo = () => {
     return localStorage.removeItem(TOKEN_KEY)
 }
 

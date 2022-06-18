@@ -1,6 +1,6 @@
 import { Toast } from 'antd-mobile'
 import axios, { AxiosError } from 'axios'
-import { getTokenInfo, setTokenInfo } from './storage'
+import { getTokenInfo, removeTokenInfo, setTokenInfo } from './storage'
 import history from './history'
 import store from '@/store'
 import { saveToken, logout } from '@/store/actions/login'
@@ -75,7 +75,11 @@ instance.interceptors.response.use(response => {
         // token 刷新成功后，重新把最开始失败的请求重新发一次
         return instance(config)   // 返回一个 promise，所以要返回出去
     } catch {
-        store.dispatch(logout())
+        removeTokenInfo()
+        store.dispatch(logout({
+            token: '',
+            refresh_token: ''
+        }))
         history.push({
             pathname: '/login',
             state: {
