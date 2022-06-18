@@ -1,6 +1,7 @@
 import http from '@/utils/request'
 import { User, Profile, ProfileAction } from '../reducer/profile'
 import { Dispatch } from 'redux'
+import { RootThunkAction } from '..'
 
 /**
  * 
@@ -25,8 +26,8 @@ export const saveProfile = (payload: Profile): ProfileAction => {
  * 
  * @returns get user inofrmation
  */
-export const getUser = () => {
-    return async (dispatch: Dispatch) => {
+export const getUser = (): RootThunkAction => {
+    return async (dispatch) => {
         const res = await http.get('/user')
         dispatch(saveUser(res.data))
     }
@@ -36,22 +37,22 @@ export const getUser = () => {
  * 
  * @returns get profile details
  */
-export const getProfile = () => {
-    return async (dispatch: Dispatch) => {
+export const getProfile = (): RootThunkAction => {
+    return async (dispatch) => {
         const res = await http.get('/user/profile')
         dispatch(saveProfile(res.data))
     }
 }
 
 type PartialProfile = Partial<Profile>
-export const updateProfile = (data: PartialProfile) => {
-    return async (dispatch: any) => {
+export const updateProfile = (data: PartialProfile): RootThunkAction => {
+    return async (dispatch) => {
         await http.patch('/user/profile', data)
         dispatch(getProfile())
     }
 }
-export const updatePhoto = (formDate: FormData) => {
-    return async (dispatch: any) => {
+export const updatePhoto = (formDate: FormData): RootThunkAction => {
+    return async (dispatch) => {
         //http.patch('/user/photo', formDate) upload to database
         await http.patch('/user/photo', formDate);
         // dispatch(getProfile) get new iamge from database
