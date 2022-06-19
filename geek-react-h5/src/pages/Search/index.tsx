@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect} from 'react'
 import Icon from '@/components/Icon'
 import NavBar from '@/components/NavBar'
 import classNames from 'classnames'
@@ -6,7 +7,24 @@ import styles from './index.module.scss'
 
 const Search = () => {
     const history = useHistory()
+    const [keyword, setKeyword] = useState('')
+    const timeRef = useRef(-1)
 
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeRef.current)
+        }
+    }, [])
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const text = e.target.value  //这样定时器里面就是最新的值,如果定时器里使用 keyword就会有闭包问题
+        setKeyword(text)
+        clearTimeout(timeRef.current)
+        timeRef.current = window.setTimeout(() => {
+            console.log('text', text)
+        }, 500)
+        console.log('需要发送请求进行搜索')
+    }
     return (
         <div className={styles.root}>
             <NavBar
@@ -19,7 +37,12 @@ const Search = () => {
                 <div className='navbar-search'>
                     <Icon type="iconbtn_search" className='icon-search' />
                     <div className='input-wrapper'>
-                        <input type="text" placeholder="请输入关键字搜索" />
+                        <input 
+                            type="text" 
+                            placeholder="请输入关键字搜索" 
+                            value={keyword} 
+                            onChange={e => onChange(e)} 
+                        />
                         <Icon type="iconbtn_tag_close" className="icon-close" />
                     </div>
                 </div>
