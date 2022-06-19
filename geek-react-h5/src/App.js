@@ -10,6 +10,7 @@ const ProfileEdit = React.lazy(() => import('@/pages/Profile/Edit') )
 const ProfileChat = React.lazy(() =>  import('@/pages/Profile/Chat'))
 const ProfileFeedback = React.lazy(() =>  import('@/pages/Profile/Feedback'))
 const NotFound = React.lazy(() => import('@/pages/NotFound'))
+const Search = React.lazy(() => import('@/pages/Search'))
 // const UseReducerDemo = React.lazy(() =>  import('@/components/useReducerDemo'))
 // const ClassDemo = React.lazy(() =>  import('@/components/useReducerDemo/ClassDemo'))
 
@@ -22,6 +23,7 @@ export default function App() {
                 <Redirect exact from="/" to="/home"></Redirect>
                 <Route path="/login" component={Login}></Route>
                 <Route path="/home" component={Home}></Route>
+                <Route path="/search" component={Search}></Route>
 
                 {/* additional demo for useReducer and redux */}
                 {/* <Route path="/demo" component={UseReducerDemo}></Route>

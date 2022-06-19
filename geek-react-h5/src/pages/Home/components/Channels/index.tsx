@@ -6,38 +6,36 @@ import differenceBy from 'lodash/differenceBy'
 import classNames from 'classnames'
 import { addChannel, delChannel } from '@/store/actions/home'
 import { Toast } from 'antd-mobile'
+import { RootState } from '@/store'
 
-const Channels = ({index, onClick, onChange, onClose}) => {
+type ChnannelsType = {
+  index?: any
+  onClick?: any
+  onChange?: any
+  onClose?: any 
+}
+const Channels = ({index,  onChange, onClose}: ChnannelsType) => {
     const [editing, setEditing] = useState(false)
-    const userChannels = useSelector(state => state.home.userChannels);
+    const userChannels = useSelector((state: RootState) => state.home.userChannels);
     const dispatch = useDispatch();
     // 推荐
-    const recommendChannels = useSelector( state => {
+    const recommendChannels = useSelector((state: RootState) => {
       const { userChannels, allChannels } = state.home;
-      // return allChannels.filter(item => {
-      //   return userChannels.findIndex(v => v.id === item.id) === -1
-      // })
-      // 第二种方法： 使用 lodash 来比较两个数组，获取数组里不重复的值
       return differenceBy(allChannels, userChannels, 'id')
     });
 
   // 点击切换频道
-  const changeChannel = (i) => {
-    if(editing) return;   // 如果是编辑状态，不允许跳转
+  const changeChannel = (i: number) => {
+    if(editing) return;
     onChange(i);
     onClose();
   }
 
-  const del = (channel, i) => {
+  const del = (channel: any, i: number) => {
     if(userChannels.length <= 4) {
       Toast.info('至少保留4个频道哦~')
     }
     dispatch(delChannel(channel))
-    // 删除时需要处理高亮
-    // 高亮处理：
-    // 1. 如果删除的 i 和 index相等，默认让推荐 0 高亮
-    // 2. 如果删除的 i 小于 index，默认让 i - 1 高亮
-    // 3. 如果删除的 i 大于 index，不做处理 
     if(i === index) {
       onChange(0)
     }
@@ -46,7 +44,7 @@ const Channels = ({index, onClick, onChange, onClose}) => {
     }
   }
 
-  const add = async (channel) => {
+  const add = async (channel: any) => {
     await dispatch(addChannel(channel));
     Toast.success('添加成功', 1);
   }
