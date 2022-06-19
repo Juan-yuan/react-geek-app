@@ -7,6 +7,7 @@ import { ThunkAction } from 'redux-thunk'
 import { HomeAction } from './reducer/home'
 import { LoginAction } from "./reducer/login"
 import { ProfileAction } from "./reducer/profile"
+import { SearchAction } from "./reducer/search"
 
 const store = createStore(
     reducer, 
@@ -16,7 +17,7 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(thunk))
 )
 
-type RootAction = HomeAction | LoginAction | ProfileAction
+type RootAction = HomeAction | LoginAction | ProfileAction | SearchAction
 export type RootState = ReturnType<typeof store.getState>
 
 export type RootThunkAction = ThunkAction<Promise<void>, RootState, unknown, RootAction>
