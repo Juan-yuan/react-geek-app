@@ -6,14 +6,21 @@ import { useHistory } from 'react-router'
 import styles from './index.module.scss'
 import debounce from 'lodash/debounce'
 import { DebouncedFunc } from 'lodash'
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { getSuggestList } from '@/store/actions/search'
+import { RootState } from '@/store/index'
 
 // let fetDate: DebouncedFunc<() => void>
 const Search = () => {
     const history = useHistory()
     const [keyword, setKeyword] = useState('')
     const dispatch = useDispatch()
+    const suggestions = useSelector( (state: RootState) => {
+        // return state.search.suggestions
+        // console.log('state', state.search.suggestions)
+        return state.search.suggestions
+    })
+    console.log("suggestions", suggestions)
 
     // 防抖第二种方法： lodash来做：
     // if(!fetDate) {
@@ -46,6 +53,13 @@ const Search = () => {
             dispatch(getSuggestList(text))
         }, 500)
         console.log('需要发送请求进行搜索')
+    }
+
+    // highlight font
+    const highlight = ( str: string, key: string) => {
+        return str.replace(new RegExp(key, 'gi'), (match: string) => {
+            return `<span style="color: red">${match}</span>`
+        })
     }
 
     
@@ -98,12 +112,19 @@ const Search = () => {
             </div>
 
             <div className='search-result'>
-                <div className="result-item">
-                    <Icon className="icon-search" type="iconbtn_search" />
-                    <div className="result-value">
-                    <span></span>
-                    </div>
-                </div>
+                {
+                    suggestions.map( (item, index)  => {
+                        return (
+                            <div className="result-item" key={index}>
+                                <Icon className="icon-search" type="iconbtn_search" />
+                                <div className="result-value">
+                                 {highlight(item, keyword)}
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+                
             </div>
         </div>
     )

@@ -52,7 +52,7 @@ export default function Home() {
         position="left" 
         sidebar={open && <Channels onClose={onClose} index={active} onChange={changeActive}></Channels>} 
         open={open}
-      />
+      ></Drawer>
       <MoreAction />
     </div>
   )
