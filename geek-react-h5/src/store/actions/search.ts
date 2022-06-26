@@ -1,3 +1,4 @@
+import { SearchAction } from './../reducer/search';
 import request from "@/utils/request"
 import { RootThunkAction } from './../index';
 
@@ -15,5 +16,11 @@ export function getSuggestList(keyword: string): RootThunkAction {
             type: 'search/saveSuggestions',
             payload: options,
         })
+    }
+}
+
+export function clearSuggestions(): SearchAction {
+    return {
+        type: 'search/clearSuggestions'
     }
 }

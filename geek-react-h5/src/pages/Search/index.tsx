@@ -1,26 +1,26 @@
 import { useState, useRef, useEffect} from 'react'
 import Icon from '@/components/Icon'
 import NavBar from '@/components/NavBar'
-import classNames from 'classnames'
 import { useHistory } from 'react-router'
 import styles from './index.module.scss'
 import debounce from 'lodash/debounce'
 import { DebouncedFunc } from 'lodash'
 import { useDispatch, useSelector} from 'react-redux'
-import { getSuggestList } from '@/store/actions/search'
+import { getSuggestList, clearSuggestions } from '@/store/actions/search'
 import { RootState } from '@/store/index'
+import classnames from 'classnames'
 
 // let fetDate: DebouncedFunc<() => void>
 const Search = () => {
     const history = useHistory()
     const [keyword, setKeyword] = useState('')
+    const [isSearching, setIsSearching] = useState(false)
     const dispatch = useDispatch()
     const suggestions = useSelector( (state: RootState) => {
         // return state.search.suggestions
         // console.log('state', state.search.suggestions)
         return state.search.suggestions
     })
-    console.log("suggestions", suggestions)
 
     // 防抖第二种方法： lodash来做：
     // if(!fetDate) {
@@ -45,14 +45,18 @@ const Search = () => {
     }, [])
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const text = e.target.value  //这样定时器里面就是最新的值,如果定时器里使用 keyword就会有闭包问题
+        const text = e.target.value.trim()  //这样定时器里面就是最新的值,如果定时器里使用 keyword就会有闭包问题
         setKeyword(text)
 
         window.clearTimeout(timeRef.current)
         timeRef.current = window.setTimeout(() => {
-            dispatch(getSuggestList(text))
+            if (text) {
+                setIsSearching(true)
+                dispatch(getSuggestList(text))
+            } else {
+                setIsSearching(false)
+            }
         }, 500)
-        console.log('需要发送请求进行搜索')
     }
 
     // highlight font
@@ -60,6 +64,12 @@ const Search = () => {
         return str.replace(new RegExp(key, 'gi'), (match: string) => {
             return `<span style="color: red">${match}</span>`
         })
+    }
+
+    const onCliear = () => {
+        setKeyword('')
+        setIsSearching(false)
+        dispatch(clearSuggestions())
     }
 
     
@@ -81,12 +91,12 @@ const Search = () => {
                             value={keyword} 
                             onChange={e => onChange(e)} 
                         />
-                        <Icon type="iconbtn_tag_close" className="icon-close" />
+                        <Icon type="iconbtn_tag_close" className="icon-close" onClick={onCliear}  />
                     </div>
                 </div>
             </NavBar>
 
-            <div className="history">
+            <div className="history" style={{display: isSearching ? 'none' : 'block'}}>
                 <div className="history-header">
                     <span>搜索历史</span>
                     <span>
@@ -111,7 +121,7 @@ const Search = () => {
                 </div>
             </div>
 
-            <div className='search-result'>
+            <div className={classnames('search-result', { show: isSearching})}>
                 {
                     suggestions.map( (item, index)  => {
                         return (
