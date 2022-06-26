@@ -74,7 +74,9 @@ const Search = () => {
     }
 
     const onSearch = (key: string) => {
+        if(!key) return
         dispatch(addSearchList(key))
+        history.push('/search/result?key=' + key)
     }
 
     const onClearHistory = () => {
