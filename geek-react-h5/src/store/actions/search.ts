@@ -1,3 +1,4 @@
+import { removeLocalHistories } from './../../utils/storage';
 import { SearchAction } from './../reducer/search';
 import request from "@/utils/request"
 import { RootThunkAction } from './../index';
@@ -34,11 +35,19 @@ export function addSearchList(keyword: string): RootThunkAction {
         if (histories.length > 10) {
             histories = histories.slice(0, 10)
         }
-        console.log('h', histories)
         dispatch({
             type: 'search/saveHistories',
             payload: histories
         })
         setLocalHistories(histories)
+    }
+}
+
+export function clearHistories(): RootThunkAction {
+    return async (dispatch) => {
+        removeLocalHistories()
+        dispatch({
+            type: 'search/clearHistories',
+        })
     }
 }

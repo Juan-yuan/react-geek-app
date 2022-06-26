@@ -6,9 +6,10 @@ import styles from './index.module.scss'
 import debounce from 'lodash/debounce'
 import { DebouncedFunc } from 'lodash'
 import { useDispatch, useSelector} from 'react-redux'
-import { getSuggestList, clearSuggestions, addSearchList } from '@/store/actions/search'
+import { getSuggestList, clearSuggestions, addSearchList, clearHistories } from '@/store/actions/search'
 import { RootState } from '@/store/index'
 import classnames from 'classnames'
+import { Dialog } from 'antd-mobile-v5'
 
 // let fetDate: DebouncedFunc<() => void>
 const Search = () => {
@@ -73,8 +74,17 @@ const Search = () => {
     }
 
     const onSearch = (key: string) => {
-        console.log("key", key)
         dispatch(addSearchList(key))
+    }
+
+    const onClearHistory = () => {
+        Dialog.confirm({
+            title: '温馨提示:',
+            content: '你确定要清空记录吗?',
+            onConfirm: function() {
+                dispatch(clearHistories())
+            }
+        })
     }
 
     
@@ -104,7 +114,7 @@ const Search = () => {
             <div className="history" style={{display: isSearching ? 'none' : 'block'}}>
                 <div className="history-header">
                     <span>搜索历史</span>
-                    <span>
+                    <span onClick={onClearHistory}>
                         <Icon type="iconbtn_del" />
                         清除全部
                     </span>
