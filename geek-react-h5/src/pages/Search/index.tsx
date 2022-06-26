@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 import debounce from 'lodash/debounce'
 import { DebouncedFunc } from 'lodash'
 import { useDispatch, useSelector} from 'react-redux'
-import { getSuggestList, clearSuggestions } from '@/store/actions/search'
+import { getSuggestList, clearSuggestions, addSearchList } from '@/store/actions/search'
 import { RootState } from '@/store/index'
 import classnames from 'classnames'
 
@@ -74,6 +74,7 @@ const Search = () => {
 
     const onSearch = (key: string) => {
         console.log("key", key)
+        dispatch(addSearchList(key))
     }
 
     

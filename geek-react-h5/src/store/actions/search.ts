@@ -1,6 +1,7 @@
 import { SearchAction } from './../reducer/search';
 import request from "@/utils/request"
 import { RootThunkAction } from './../index';
+import { setLocalHistories } from '@/utils/storage';
 
 type SuggestListRes = {
     options: string[]
@@ -22,5 +23,18 @@ export function getSuggestList(keyword: string): RootThunkAction {
 export function clearSuggestions(): SearchAction {
     return {
         type: 'search/clearSuggestions'
+    }
+}
+
+export function addSearchList(keyword: string): RootThunkAction {
+    return async (dispatch, getState) => {
+        let histories = getState().search.histories
+        histories = [keyword, ...histories]
+        console.log('h', histories)
+        dispatch({
+            type: 'search/saveHistories',
+            payload: histories
+        })
+        setLocalHistories(histories)
     }
 }
