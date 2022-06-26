@@ -1,3 +1,4 @@
+import { Ariticle } from './../reducer/home';
 import { removeLocalHistories } from './../../utils/storage';
 import { SearchAction } from './../reducer/search';
 import request from "@/utils/request"
@@ -6,6 +7,13 @@ import { setLocalHistories } from '@/utils/storage';
 
 type SuggestListRes = {
     options: string[]
+}
+
+type ResultRes = {
+    page: number
+    per_page: number
+    results: Ariticle[]
+    total_count: number
 }
 export function getSuggestList(keyword: string): RootThunkAction {
     return async dispatch => {
@@ -48,6 +56,22 @@ export function clearHistories(): RootThunkAction {
         removeLocalHistories()
         dispatch({
             type: 'search/clearHistories',
+        })
+    }
+}
+
+export function getSearchResults(keyword: string, page: number): RootThunkAction {
+    return async (dispatch) => {
+        const res = await request.get<ResultRes>('search', {
+            params: {
+                q: keyword,
+                page,
+                per_page: 10
+            }
+        })
+        dispatch({
+            type: 'search/saveResults',
+            payload: res.data.results
         })
     }
 }

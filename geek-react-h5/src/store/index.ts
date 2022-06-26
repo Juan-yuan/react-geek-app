@@ -17,6 +17,7 @@ const store = createStore(
         search: {
             suggestions: [],
             histories: getLocalHistories(),
+            results: []
         }
     },
     composeWithDevTools(applyMiddleware(thunk))

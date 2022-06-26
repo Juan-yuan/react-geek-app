@@ -1,11 +1,14 @@
+import { Ariticle } from './home';
 type SearchType = {
     suggestions: string[]
     histories: string[]
+    results: Ariticle[]
 }
 
 const initValue: SearchType = {
     suggestions: [],
-    histories: []
+    histories: [],
+    results: []
 }
 
 export type SearchAction = {
@@ -18,6 +21,9 @@ export type SearchAction = {
     payload: string[]
 } | {
     type: 'search/clearHistories'
+} | {
+    type: 'search/saveResults',
+    payload: Ariticle[]
 }
 
 export default function reducer(state = initValue, action: SearchAction) {
@@ -43,6 +49,12 @@ export default function reducer(state = initValue, action: SearchAction) {
         return {
             ...state,
             histories: []
+        }
+    }
+    if(action.type === 'search/saveResults') {
+        return {
+            ...state,
+            results: action.payload
         }
     }
     return state
