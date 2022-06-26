@@ -25,9 +25,12 @@ const SearchResult = () => {
     const loadMore = async() => {
         if(loading) return
         setLoading(true)
-        await dispatch(getSearchResults(key, page))
-        page = page + 1
-        setLoading(false)
+        try {
+            await dispatch(getSearchResults(key, page))
+            page = page + 1
+        } finally {
+            setLoading(false)
+        }
         if(page > 5) {
             setHasMore(false)
         }
