@@ -117,8 +117,7 @@ const Search = () => {
                         return (
                             <div className="result-item" key={index}>
                                 <Icon className="icon-search" type="iconbtn_search" />
-                                <div className="result-value">
-                                 {highlight(item, keyword)}
+                                <div className="result-value" dangerouslySetInnerHTML={{__html: highlight(item, keyword)}}>
                                 </div>
                             </div>
                         )

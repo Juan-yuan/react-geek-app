@@ -7,10 +7,13 @@ type SuggestListRes = {
 export function getSuggestList(keyword: string): RootThunkAction {
     return async dispatch => {
         const res = await request.get<SuggestListRes>('/suggestion?q=' + keyword)
+        let options = res.data.options
+        if(!options[0]) {
+            options = []
+        }
         dispatch({
             type: 'search/saveSuggestions',
-            payload: res.data.options,
+            payload: options,
         })
-        console.log(res)
     }
 }
