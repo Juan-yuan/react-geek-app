@@ -16,10 +16,10 @@ const Search = () => {
     const [keyword, setKeyword] = useState('')
     const [isSearching, setIsSearching] = useState(false)
     const dispatch = useDispatch()
-    const suggestions = useSelector( (state: RootState) => {
+    const {suggestions, histories} = useSelector( (state: RootState) => {
         // return state.search.suggestions
         // console.log('state', state.search.suggestions)
-        return state.search.suggestions
+        return state.search
     })
 
     // 防抖第二种方法： lodash来做：
@@ -111,18 +111,18 @@ const Search = () => {
                 </div>
 
                 <div className="history-list">
-                <span className="history-item">
-                    Python生成九宫格图片<span className="divider"></span>
-                </span>
-                <span className="history-item">
-                    Python<span className="divider"></span>
-                </span>
-                <span className="history-item">
-                    CSS<span className="divider"></span>
-                </span>
-                <span className="history-item">
-                    数据分析<span className="divider"></span>
-                </span>
+                    {
+                        histories.map((item, index) => {
+                            return (
+                                <span className="history-item" key={index} onClick={() => onSearch(item)}>
+                                    {
+                                        index !== 0 && <span className="divider"></span>
+                                    }
+                                    {item}
+                                </span>
+                            )
+                        })
+                    }
                 </div>
             </div>
 

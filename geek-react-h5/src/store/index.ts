@@ -1,3 +1,4 @@
+import { getLocalHistories } from './../utils/storage';
 import { createStore, applyMiddleware } from "redux"
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from "redux-devtools-extension"
@@ -12,7 +13,11 @@ import { SearchAction } from "./reducer/search"
 const store = createStore(
     reducer, 
     {
-        login: getTokenInfo()
+        login: getTokenInfo(),
+        search: {
+            suggestions: [],
+            histories: getLocalHistories(),
+        }
     },
     composeWithDevTools(applyMiddleware(thunk))
 )

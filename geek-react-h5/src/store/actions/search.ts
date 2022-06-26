@@ -29,7 +29,11 @@ export function clearSuggestions(): SearchAction {
 export function addSearchList(keyword: string): RootThunkAction {
     return async (dispatch, getState) => {
         let histories = getState().search.histories
+        histories = histories.filter( item => item !== keyword )
         histories = [keyword, ...histories]
+        if (histories.length > 10) {
+            histories = histories.slice(0, 10)
+        }
         console.log('h', histories)
         dispatch({
             type: 'search/saveHistories',
