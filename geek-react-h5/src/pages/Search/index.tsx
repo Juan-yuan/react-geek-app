@@ -72,6 +72,10 @@ const Search = () => {
         dispatch(clearSuggestions())
     }
 
+    const onSearch = (key: string) => {
+        console.log("key", key)
+    }
+
     
     return (
         <div className={styles.root}>
@@ -79,7 +83,7 @@ const Search = () => {
                 className="navbar"
                 onLeftClick={() => history.go(-1)}
                 extra={
-                    <span className="search-text">搜索</span>
+                    <span className="search-text" onClick={() => onSearch(keyword)}>搜索</span>
                 }
             >
                 <div className='navbar-search'>
@@ -125,7 +129,7 @@ const Search = () => {
                 {
                     suggestions.map( (item, index)  => {
                         return (
-                            <div className="result-item" key={index}>
+                            <div className="result-item" key={index} onClick={() => onSearch(item)}>
                                 <Icon className="icon-search" type="iconbtn_search" />
                                 <div className="result-value" dangerouslySetInnerHTML={{__html: highlight(item, keyword)}}>
                                 </div>

@@ -1,5 +1,6 @@
-const TOKEN_KEY = 'geek-itcast'
-const CHANNEL_KEY = 'geek-itcast-21-channels'
+const TOKEN_KEY = 'geek-react-h5'
+const CHANNEL_KEY = 'geek-react-h5-channels'
+const SEARCH_HIS_KEY = 'geek-react-h5-search'
 
 // get token
 export const getTokenInfo = () => {
@@ -45,4 +46,16 @@ export const getLocalChannels = ():Channels => {
 
 export const removeLocalChannels = () => {
     localStorage.removeItem(CHANNEL_KEY)
+}
+
+export const getLocalHistories = (): string[] => {
+    return JSON.parse(localStorage.getItem(SEARCH_HIS_KEY)!) || []
+}
+
+export const setLocalHistories = (histories: string[]) => {
+    localStorage.setItem(SEARCH_HIS_KEY, JSON.stringify(histories))
+}
+
+export const removeLocalHistories = () => {
+    localStorage.removeItem(SEARCH_HIS_KEY)
 }
