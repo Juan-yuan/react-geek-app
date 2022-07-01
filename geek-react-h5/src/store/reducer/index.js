@@ -2,14 +2,16 @@ import login from './login'
 import profile from './profile'
 import home from './home'
 import search from './search'
+import article from './article'
 
-const { combineReducers } = require('redux')
+import { combineReducers } from 'redux'
 
 const reducer = combineReducers({
     login,
     profile,
     home,
-    search
+    search,
+    article
 })
 
 export default reducer

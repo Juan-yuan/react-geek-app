@@ -1,3 +1,4 @@
+import { ArticleAction } from './reducer/article';
 import { getLocalHistories } from './../utils/storage';
 import { createStore, applyMiddleware } from "redux"
 import thunk from 'redux-thunk'
@@ -23,7 +24,7 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(thunk))
 )
 
-type RootAction = HomeAction | LoginAction | ProfileAction | SearchAction
+type RootAction = HomeAction | LoginAction | ProfileAction | SearchAction | ArticleAction
 export type RootState = ReturnType<typeof store.getState>
 
 export type RootThunkAction = ThunkAction<Promise<void>, RootState, unknown, RootAction>

@@ -1,10 +1,18 @@
 import Icon from '@/components/Icon'
 import NavBar from "@/components/NavBar"
-import { useHistory } from 'react-router'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
 import styles from './index.module.scss'
+import { getArticleDetail } from "@/store/actions/article"
 
 const Article = () => {
     const history = useHistory()
+    const { id } = useParams<{id: string}>()
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getArticleDetail(id))
+    }, [dispatch, id])
 
     return (
         <div className={styles.root}>
