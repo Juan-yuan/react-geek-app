@@ -12,6 +12,7 @@ const ProfileFeedback = React.lazy(() =>  import('@/pages/Profile/Feedback'))
 const NotFound = React.lazy(() => import('@/pages/NotFound'))
 const Search = React.lazy(() => import('@/pages/Search'))
 const SearchResult = React.lazy(() => import('@/pages/Search/Result'))
+const Article = React.lazy(() => import('@/pages/Article'))
 // const UseReducerDemo = React.lazy(() =>  import('@/components/useReducerDemo'))
 // const ClassDemo = React.lazy(() =>  import('@/components/useReducerDemo/ClassDemo'))
 
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path="/home" component={Home}></Route>
                 <Route path="/search" exact component={Search}></Route>
                 <Route path="/search/result" exact component={SearchResult}></Route>
+                <Route path="/article/:id" exact component={Article}></Route>
 
                 {/* additional demo for useReducer and redux */}
                 {/* <Route path="/demo" component={UseReducerDemo}></Route>

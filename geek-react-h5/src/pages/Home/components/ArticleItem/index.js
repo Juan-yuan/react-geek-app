@@ -7,6 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/zh-cn'   // 指定导入中文
 import { useSelector, useDispatch } from 'react-redux'
 import { setMoreAction } from '@/store/actions/home'
+import { useHistory } from 'react-router'
 dayjs.locale('zh-cn')
 dayjs.extend(relativeTime)
 
@@ -20,9 +21,11 @@ const ArticleItem = ({article, channelId}) => {
    } = article
    const isLogin = useSelector((state) => !!state.login.token)
    const dispatch = useDispatch()
+   const history = useHistory()
   return (
     <div
       className={styles.root}
+      onClick={() => history.push('/article/' + article.art_id)}
     >
       {/* t3: 三图结构 none-mt没有图片结构  */}
       <div
