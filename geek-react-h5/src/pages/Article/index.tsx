@@ -15,6 +15,7 @@ import throttle from 'lodash/throttle'
 import NoComment from '@/pages/Article/NoComment'
 import CommentItem from './CommentItem'
 import { InfiniteScroll } from 'antd-mobile-v5'
+import CommentFooter from './CommentFooter'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -121,6 +122,7 @@ const Article = () => {
                         </div>                       
                     </div>
                 </>
+                <CommentFooter></CommentFooter>
             </div>
         </div>
     )
