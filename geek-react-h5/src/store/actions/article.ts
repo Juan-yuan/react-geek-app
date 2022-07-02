@@ -25,3 +25,19 @@ export function getCommentList(id: string): RootThunkAction {
         })
     }
 }
+
+export function getMoreCommentList(id: string, offset: string): RootThunkAction {
+    return async (dispatch) => {
+        const res = await request.get('/comments', {
+            params: {
+                type: 'a',
+                source: id,
+                offset
+            }
+        })
+        dispatch({
+            type: 'article/saveMoreComment',
+            payload: res.data
+        })
+    }
+}

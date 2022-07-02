@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import styles from './index.module.scss'
-import { getArticleDetail, getCommentList } from "@/store/actions/article"
+import { getArticleDetail, getCommentList, getMoreCommentList } from "@/store/actions/article"
 import { RootState } from '@/store'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
@@ -14,6 +14,7 @@ import 'highlight.js/styles/vs2015.css'
 import throttle from 'lodash/throttle'
 import NoComment from '@/pages/Article/NoComment'
 import CommentItem from './CommentItem'
+import { InfiniteScroll } from 'antd-mobile-v5'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -53,7 +54,10 @@ const Article = () => {
         dispatch(getCommentList(id))
     }, [dispatch, detail])
 
-
+    const hasMore = comment.last_id !== comment.end_id
+    const loadMore = async () => {
+        await dispatch(getMoreCommentList(id, comment.last_id))
+    }
     return (
         <div className={styles.root}>
             <div className="root-wrapper">
@@ -113,6 +117,7 @@ const Article = () => {
                                     comment.results?.map((item) => <CommentItem key={item.com_id} comment={item} />)
                                 )
                             }
+                            <InfiniteScroll hasMore={hasMore} loadMore={loadMore}></InfiniteScroll>
                         </div>                       
                     </div>
                 </>
