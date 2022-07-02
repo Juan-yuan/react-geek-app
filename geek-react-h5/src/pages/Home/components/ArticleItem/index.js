@@ -3,13 +3,10 @@ import Icon from '@/components/Icon'
 import Img from '@/components/Image'
 import styles from './index.module.scss'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/zh-cn'   // 指定导入中文
 import { useSelector, useDispatch } from 'react-redux'
 import { setMoreAction } from '@/store/actions/home'
 import { useHistory } from 'react-router'
-dayjs.locale('zh-cn')
-dayjs.extend(relativeTime)
+
 
 const ArticleItem = ({article, channelId}) => {
   const { 

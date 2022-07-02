@@ -13,6 +13,7 @@ import highlight from 'highlight.js'
 import 'highlight.js/styles/vs2015.css'
 import throttle from 'lodash/throttle'
 import NoComment from '@/pages/Article/NoComment'
+import CommentItem from './CommentItem'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -23,7 +24,7 @@ const Article = () => {
     useEffect(() => {
         dispatch(getArticleDetail(id))
     }, [dispatch, id])
-    const { detail } = useSelector((state: RootState) => state.article)
+    const { detail, comment } = useSelector((state: RootState) => state.article)
 
     useEffect(() => {
         const codes = document.querySelectorAll('.dg-html code')
@@ -102,7 +103,17 @@ const Article = () => {
                                 </div>
                             </div>
                         </div> 
-                        <NoComment></NoComment>                       
+                        <div className="comment">
+                            <div className="comment-header">
+                                <span>全部评论({detail.comm_count})</span>
+                                <span>{detail.like_count}点赞</span>
+                            </div>
+                            {
+                                detail.comm_count === 0 ? (<NoComment />) : (
+                                    comment.results?.map((item) => <CommentItem key={item.com_id} comment={item} />)
+                                )
+                            }
+                        </div>                       
                     </div>
                 </>
             </div>
