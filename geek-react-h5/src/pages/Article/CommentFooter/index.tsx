@@ -1,10 +1,15 @@
 import Icon from '@/components/Icon'
 import { RootState } from '@/store'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.scss'
+import { likeArticle } from '@/store/actions/article'
 
 const CommentFooter = () => {
   const { detail } = useSelector((state: RootState) => state.article)
+  const dispatch = useDispatch()
+  const onLike = async () => {
+    await dispatch(likeArticle(detail.art_id, detail.attitude))
+  }
   return (
     <div className={styles.root}>
       <div className="input-btn">
@@ -17,7 +22,7 @@ const CommentFooter = () => {
             <p>评论</p>
              <span className="bage">{detail.comm_count}</span>
           </div>
-          <div className="action-item" >
+          <div className="action-item" onClick={onLike}>
             <Icon
               type={detail.attitude === 1 ? 'iconbtn_like_sel' : 'iconbtn_like2'}
             />

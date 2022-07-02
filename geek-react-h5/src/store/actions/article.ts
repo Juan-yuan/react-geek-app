@@ -41,3 +41,16 @@ export function getMoreCommentList(id: string, offset: string): RootThunkAction 
         })
     }
 }
+
+export function likeArticle(id: string, attitude: number) : RootThunkAction {
+    return async (dispatch) => {
+        if(attitude === 1) {
+            // 取消点赞
+            await request.delete('/article/likings/' + id)
+        } else {
+            await request.post('/article/likings', { target: id})
+        }
+        // 重新加载下文章，刷新页面
+        dispatch(getArticleDetail(id))
+    }
+}

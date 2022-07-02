@@ -43,7 +43,7 @@ instance.interceptors.response.use(response => {
     const { refresh_token} = getTokenInfo()
     if(!refresh_token) {
         // 没有token，跳转到登录页
-        history.push({
+        history.replace({
             pathname: '/login',
             state: {
                 from: history.location.pathname
@@ -80,7 +80,7 @@ instance.interceptors.response.use(response => {
             token: '',
             refresh_token: ''
         }))
-        history.push({
+        history.replace({
             pathname: '/login',
             state: {
                 from: history.location.pathname
