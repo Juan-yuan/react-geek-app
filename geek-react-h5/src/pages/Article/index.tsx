@@ -23,6 +23,8 @@ const Article = () => {
     const history = useHistory()
     const { id } = useParams<{id: string}>()
     const dispatch = useDispatch()
+    const commentRef = useRef<HTMLDivElement>(null)
+    const isShowComment = useRef(false)
     useEffect(() => {
         dispatch(getArticleDetail(id))
     }, [dispatch, id])
@@ -58,6 +60,15 @@ const Article = () => {
     const hasMore = comment.last_id !== comment.end_id
     const loadMore = async () => {
         await dispatch(getMoreCommentList(id, comment.last_id))
+    }
+
+    const goComment = () => {
+        if(isShowComment.current) {
+            window.scrollTo(0,0)
+        } else {
+            window.scrollTo(0, commentRef.current!.offsetTop)
+        }
+        isShowComment.current = !isShowComment.current
     }
     return (
         <div className={styles.root}>
@@ -109,7 +120,7 @@ const Article = () => {
                             </div>
                         </div> 
                         <div className="comment">
-                            <div className="comment-header">
+                            <div className="comment-header" ref={commentRef}>
                                 <span>全部评论({detail.comm_count})</span>
                                 <span>{detail.like_count}点赞</span>
                             </div>
@@ -122,7 +133,7 @@ const Article = () => {
                         </div>                       
                     </div>
                 </>
-                <CommentFooter></CommentFooter>
+                <CommentFooter goComment={goComment}></CommentFooter>
             </div>
         </div>
     )

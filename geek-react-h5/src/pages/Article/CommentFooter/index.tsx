@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.scss'
 import { likeArticle, collectArticle } from '@/store/actions/article'
 
-const CommentFooter = () => {
+type Props = {
+  goComment?: () => void
+}
+const CommentFooter = ({goComment}:Props )=> {
   const { detail } = useSelector((state: RootState) => state.article)
   const dispatch = useDispatch()
   const onLike = async () => {
@@ -14,6 +17,7 @@ const CommentFooter = () => {
   const collect = () => {
     dispatch(collectArticle(detail.art_id, detail.is_collected))
   }
+
   return (
     <div className={styles.root}>
       <div className="input-btn">
@@ -21,7 +25,7 @@ const CommentFooter = () => {
         <span>去评论</span>
       </div>
         <>
-          <div className="action-item">
+          <div className="action-item" onClick={goComment}>
             <Icon type="iconbtn_comment" />
             <p>评论</p>
              <span className="bage">{detail.comm_count}</span>
