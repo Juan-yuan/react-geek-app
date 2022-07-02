@@ -1,6 +1,6 @@
 import Icon from '@/components/Icon'
 import NavBar from "@/components/NavBar"
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import styles from './index.module.scss'
@@ -13,6 +13,8 @@ import highlight from 'highlight.js'
 import 'highlight.js/styles/vs2015.css'
 
 const Article = () => {
+    const [isShowAuthor, setIsShowAuthor] = useState(false)
+    const authorRef = useRef<HTMLDivElement>(null)
     const history = useHistory()
     const { id } = useParams<{id: string}>()
     const dispatch = useDispatch()
@@ -29,11 +31,27 @@ const Article = () => {
         })
     }, [detail])
 
+    useEffect(() => {
+        const onScroll = () => {
+            const rect = authorRef.current?.getBoundingClientRect()!
+            if(rect.top < 0) {
+                setIsShowAuthor(true)
+            } else {
+                setIsShowAuthor(false)
+            }
+        }
+        document.addEventListener('scroll', onScroll)
+        return () => {
+            document.removeEventListener('scroll', onScroll)
+        }
+    }, [])
+
 
     return (
         <div className={styles.root}>
             <div className="root-wrapper">
                 <NavBar
+                    className="navBar"
                     onLeftClick={() => history.go(-1)}
                     extra={
                         <span>
@@ -41,12 +59,16 @@ const Article = () => {
                         </span>
                     }
                 >
-                    {/* <div className="nav-author">
-                        <img src={''} alt="" />
-                        <span className="name">{'张三'}</span>
-                        <span className="follow">关注</span>
-                    </div> */}
-                    哈哈哈
+                    { isShowAuthor ? (<div className="nav-author">
+                        <img src={detail.aut_photo} alt="" />
+                        <span className="name">{detail.aut_name}</span>
+                        <span
+                            className={classNames('follow', detail.is_collected ? 'followed' : '')}
+                        >
+                            {detail.is_followed ? '已关注' : '关注'}
+                        </span>
+                    </div>) : ''
+                }
                 </NavBar>
                 <>
                     <div className="wrapper">
@@ -60,7 +82,7 @@ const Article = () => {
                                     <span>{detail.comm_count}评论</span>
                                 </div> 
 
-                                <div className="author">
+                                <div className="author" ref={authorRef}>
                                     <img src={detail.aut_photo} alt="" />
                                     <span className="name">{detail.aut_name}</span>
                                     <span className={classNames('follow', { followed: detail.is_followed})}>{detail.is_followed ? '已关注' : '关注'}</span>
