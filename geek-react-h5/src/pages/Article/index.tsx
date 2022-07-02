@@ -9,8 +9,8 @@ import { RootState } from '@/store'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import DOMPurify from 'dompurify'
-
-const dirty = '<a></a>'
+import highlight from 'highlight.js'
+import 'highlight.js/styles/vs2015.css'
 
 const Article = () => {
     const history = useHistory()
@@ -19,8 +19,16 @@ const Article = () => {
     useEffect(() => {
         dispatch(getArticleDetail(id))
     }, [dispatch, id])
-
     const { detail } = useSelector((state: RootState) => state.article)
+
+    useEffect(() => {
+        const codes = document.querySelectorAll('.dg-html code')
+        codes.forEach(el => {
+            // 让 code 进行高亮
+            highlight.highlightElement(el as HTMLElement)
+        })
+    }, [detail])
+
 
     return (
         <div className={styles.root}>
