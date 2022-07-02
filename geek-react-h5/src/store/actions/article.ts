@@ -54,3 +54,17 @@ export function likeArticle(id: string, attitude: number) : RootThunkAction {
         dispatch(getArticleDetail(id))
     }
 }
+
+ export function collectArticle(id: string, is_collected: boolean):RootThunkAction {
+    return async dispatch => {
+        if(is_collected) {
+            // 取消收藏
+            await request.delete('/article/collections/' + id)
+        } else {
+            await request.post('/article/collections/', {
+                target: id
+            })
+        }
+        await dispatch(getArticleDetail(id))
+    }
+ }

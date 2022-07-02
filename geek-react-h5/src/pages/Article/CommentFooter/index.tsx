@@ -2,13 +2,17 @@ import Icon from '@/components/Icon'
 import { RootState } from '@/store'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.scss'
-import { likeArticle } from '@/store/actions/article'
+import { likeArticle, collectArticle } from '@/store/actions/article'
 
 const CommentFooter = () => {
   const { detail } = useSelector((state: RootState) => state.article)
   const dispatch = useDispatch()
   const onLike = async () => {
     await dispatch(likeArticle(detail.art_id, detail.attitude))
+  }
+
+  const collect = () => {
+    dispatch(collectArticle(detail.art_id, detail.is_collected))
   }
   return (
     <div className={styles.root}>
@@ -30,7 +34,7 @@ const CommentFooter = () => {
           </div>
         </>
 
-      <div className="action-item">
+      <div className="action-item" onClick={collect}>
         <Icon type={detail.is_collected ? 'iconbtn_collect_sel' : 'iconbtn_collect'} />
         <p>收藏</p>
       </div>
