@@ -13,6 +13,7 @@
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
     "@types/react-router-dom": "^5.3.3",
+    "activate-power-mode": "^1.0.0",
     "antd-mobile": "^2.3.4",
     "antd-mobile-v5": "npm:antd-mobile@next",
     "axios": "^0.26.1",

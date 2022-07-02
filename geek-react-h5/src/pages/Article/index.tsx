@@ -4,13 +4,15 @@ import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import styles from './index.module.scss'
-import { getArticleDetail } from "@/store/actions/article"
+import { getArticleDetail, getCommentList } from "@/store/actions/article"
 import { RootState } from '@/store'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import DOMPurify from 'dompurify'
 import highlight from 'highlight.js'
 import 'highlight.js/styles/vs2015.css'
+import throttle from 'lodash/throttle'
+import NoComment from '@/pages/Article/NoComment'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -32,19 +34,23 @@ const Article = () => {
     }, [detail])
 
     useEffect(() => {
-        const onScroll = () => {
+        const onScroll = throttle( function () {
             const rect = authorRef.current?.getBoundingClientRect()!
             if(rect.top < 0) {
                 setIsShowAuthor(true)
             } else {
                 setIsShowAuthor(false)
             }
-        }
+        }, 300)
         document.addEventListener('scroll', onScroll)
         return () => {
             document.removeEventListener('scroll', onScroll)
         }
     }, [])
+
+    useEffect(() => {
+        dispatch(getCommentList(id))
+    }, [dispatch, detail])
 
 
     return (
@@ -95,7 +101,8 @@ const Article = () => {
                                     发布文章时间：{dayjs(detail.pubdate).format('YYYY-MM-DD')}
                                 </div>
                             </div>
-                        </div>                        
+                        </div> 
+                        <NoComment></NoComment>                       
                     </div>
                 </>
             </div>

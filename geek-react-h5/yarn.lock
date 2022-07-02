@@ -2421,6 +2421,11 @@ acorn@^8.2.4, acorn@^8.4.1, acorn@^8.5.0, acorn@^8.7.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
   integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
 
+activate-power-mode@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/activate-power-mode/-/activate-power-mode-1.0.0.tgz#a2c51130c5981d043bd760b8cb225c34d2c0c9c0"
+  integrity sha512-6AP7cCp5Ff7VaUKY805re11AlFg6ePInGlqq88v24Y5PvFl+6sD+WNiIZX8Uu35b8ZS9VyyTXP3znxuZ6EixGQ==
+
 add-dom-event-listener@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/add-dom-event-listener/-/add-dom-event-listener-1.1.0.tgz#6a92db3a0dd0abc254e095c0f1dc14acbbaae310"

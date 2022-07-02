@@ -10,3 +10,18 @@ export function getArticleDetail(id: string): RootThunkAction {
         })
     }
 }
+
+export function getCommentList(id: string): RootThunkAction {
+    return async (dispatch) => {
+        const res = await request.get('/comments', {
+            params: {
+                type: 'a',
+                source: id
+            }
+        })
+        dispatch({
+            type: 'article/saveComment',
+            payload: res.data
+        })
+    }
+}
