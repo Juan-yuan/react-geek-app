@@ -31,7 +31,7 @@ const Article = () => {
     const { detail, comment } = useSelector((state: RootState) => state.article)
 
     useEffect(() => {
-        const codes = document.querySelectorAll('.dg-html code')
+        const codes = document.querySelectorAll('.dg-html pre > code')  //只更改pre标签下的code标签
         codes.forEach(el => {
             // 让 code 进行高亮
             highlight.highlightElement(el as HTMLElement)
@@ -40,8 +40,8 @@ const Article = () => {
 
     useEffect(() => {
         const onScroll = throttle( function () {
-            const rect = authorRef.current?.getBoundingClientRect()!
-            if(rect.top < 0) {
+            const rect = authorRef.current?.getBoundingClientRect()
+            if(rect && rect.top < 0) {
                 setIsShowAuthor(true)
             } else {
                 setIsShowAuthor(false)
