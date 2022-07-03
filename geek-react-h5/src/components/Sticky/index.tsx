@@ -8,19 +8,21 @@ type Props = {
 const Sticky =({children, top = 0}:Props) => {
     const placeRef = useRef<HTMLDivElement>(null)
     const childrenRef = useRef<HTMLDivElement>(null)
-    const place = placeRef.current!
-    const child = childrenRef.current!
+
 
     useEffect(() => {
+        let value = (top / 375) * document.documentElement.clientWidth
+        const place = placeRef.current!
+        const child = childrenRef.current!
         const onScroll = () => {
-            if(place.getBoundingClientRect().top <= top) {
+            if(place.getBoundingClientRect().top <= value) {
                 child.style.position = 'fixed'
-                child.style.top = top + 'px'
+                child.style.top = value + 'px'
                 place.style.height = child.offsetHeight + 'px'
             } else {
                 child.style.position = 'static'
                 child.style.top = 'auto'
-                place.style.height = top + 'px'
+                place.style.height = '0px'
             }
         }
         window.addEventListener('scroll', onScroll)

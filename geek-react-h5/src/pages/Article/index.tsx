@@ -16,6 +16,7 @@ import NoComment from '@/pages/Article/NoComment'
 import CommentItem from './CommentItem'
 import { InfiniteScroll } from 'antd-mobile-v5'
 import CommentFooter from './CommentFooter'
+import Sticky from '@/components/Sticky'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -120,10 +121,12 @@ const Article = () => {
                             </div>
                         </div> 
                         <div className="comment">
-                            <div className="comment-header" ref={commentRef}>
-                                <span>全部评论({detail.comm_count})</span>
-                                <span>{detail.like_count}点赞</span>
-                            </div>
+                            <Sticky top={46}>
+                                <div className="comment-header" ref={commentRef}>
+                                    <span>全部评论({detail.comm_count})</span>
+                                    <span>{detail.like_count}点赞</span>
+                                </div>
+                            </Sticky>
                             {
                                 detail.comm_count === 0 ? (<NoComment />) : (
                                     comment.results?.map((item) => <CommentItem key={item.com_id} comment={item} />)
