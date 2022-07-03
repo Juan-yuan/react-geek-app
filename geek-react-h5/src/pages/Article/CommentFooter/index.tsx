@@ -6,8 +6,9 @@ import { likeArticle, collectArticle } from '@/store/actions/article'
 
 type Props = {
   goComment?: () => void
+  onShare?: () => void
 }
-const CommentFooter = ({goComment}:Props )=> {
+const CommentFooter = ({goComment, onShare}:Props )=> {
   const { detail } = useSelector((state: RootState) => state.article)
   const dispatch = useDispatch()
   const onLike = async () => {
@@ -42,7 +43,7 @@ const CommentFooter = ({goComment}:Props )=> {
         <Icon type={detail.is_collected ? 'iconbtn_collect_sel' : 'iconbtn_collect'} />
         <p>收藏</p>
       </div>
-      <div className="action-item">
+      <div className="action-item" onClick={onShare}>
         <Icon type="iconbtn_share" />
         <p>分享</p>
       </div>

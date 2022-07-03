@@ -17,6 +17,8 @@ import CommentItem from './CommentItem'
 import { InfiniteScroll } from 'antd-mobile-v5'
 import CommentFooter from './CommentFooter'
 import Sticky from '@/components/Sticky'
+import Share from './Share'
+import { Drawer } from 'antd-mobile'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -70,6 +72,11 @@ const Article = () => {
             window.scrollTo(0, commentRef.current!.offsetTop)
         }
         isShowComment.current = !isShowComment.current
+    }
+
+    const [share, setShare] = useState(false)
+    const onCloseShare = () => {
+        setShare(false)
     }
     return (
         <div className={styles.root}>
@@ -136,8 +143,18 @@ const Article = () => {
                         </div>                       
                     </div>
                 </>
-                <CommentFooter goComment={goComment}></CommentFooter>
+                <CommentFooter goComment={goComment} onShare={() => setShare(true)}></CommentFooter>
             </div>
+
+            <Drawer
+                className="drawer-share"
+                position="bottom"
+                style={{minHeight: document.documentElement.clientHeight}}
+                // children={''}
+                sidebar={<Share onClose={onCloseShare} />}
+                open={share}
+                onOpenChange={onCloseShare}
+            ></Drawer>
         </div>
     )
 }
