@@ -67,4 +67,18 @@ export function likeArticle(id: string, attitude: number) : RootThunkAction {
         }
         await dispatch(getArticleDetail(id))
     }
- }
+}
+
+export function addComment(aritcleId: string, content: string):RootThunkAction {
+    return async (dispatch, getState) => {
+        const res = await request.post('/comments', {
+            target: aritcleId,
+            content
+        })
+        dispatch({
+            type: 'article/saveNewComment',
+            payload: res.data.new_obj
+        })
+        dispatch(getArticleDetail(getState().article.detail.art_id))
+    }
+}
