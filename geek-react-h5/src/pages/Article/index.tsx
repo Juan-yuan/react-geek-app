@@ -19,6 +19,7 @@ import CommentFooter from './CommentFooter'
 import Sticky from '@/components/Sticky'
 import Share from './Share'
 import { Drawer } from 'antd-mobile'
+import CommentInput from './CommentInput'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -77,6 +78,15 @@ const Article = () => {
     const [share, setShare] = useState(false)
     const onCloseShare = () => {
         setShare(false)
+    }
+
+    const [showComment, setShowComment] = useState({
+        visible: false
+    })
+    const closeComment = () => {
+        setShowComment({
+            visible:false
+        })
     }
     return (
         <div className={styles.root}>
@@ -143,7 +153,10 @@ const Article = () => {
                         </div>                       
                     </div>
                 </>
-                <CommentFooter goComment={goComment} onShare={() => setShare(true)}></CommentFooter>
+                <CommentFooter 
+                    goComment={goComment} 
+                    onShare={() => setShare(true)}
+                    onComment={() => setShowComment({visible: true})} />
             </div>
 
             <Drawer
@@ -154,6 +167,21 @@ const Article = () => {
                 sidebar={<Share onClose={onCloseShare} />}
                 open={share}
                 onOpenChange={onCloseShare}
+            ></Drawer>
+
+            <Drawer
+                className="drawer"
+                position="bottom"
+                // children={''}
+                sidebar={
+                    <div className="drawer-sidebar-wrapper">
+                        {showComment.visible && (
+                            <CommentInput onClose={closeComment} aritcleId={detail.art_id} />
+                        )}
+                    </div>
+                }
+                open={showComment.visible}
+                onOpenChange={closeComment}
             ></Drawer>
         </div>
     )

@@ -7,8 +7,9 @@ import { likeArticle, collectArticle } from '@/store/actions/article'
 type Props = {
   goComment?: () => void
   onShare?: () => void
+  onComment?: () => void
 }
-const CommentFooter = ({goComment, onShare}:Props )=> {
+const CommentFooter = ({goComment, onShare, onComment}:Props )=> {
   const { detail } = useSelector((state: RootState) => state.article)
   const dispatch = useDispatch()
   const onLike = async () => {
@@ -21,7 +22,7 @@ const CommentFooter = ({goComment, onShare}:Props )=> {
 
   return (
     <div className={styles.root}>
-      <div className="input-btn">
+      <div className="input-btn" onClick={onComment}>
         <Icon type="iconbianji" />
         <span>去评论</span>
       </div>

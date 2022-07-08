@@ -4,8 +4,9 @@ import styles from './index.module.scss'
 
 type Props = {
     onClose: () => void
+    aritcleId: string
 }
-const CommentInput = ({ onClose }: Props) => {
+const CommentInput = ({ onClose, aritcleId }: Props) => {
     const [value, setValue] = useState('')
     const txtRef = useRef<HTMLTextAreaElement>(null)
 
@@ -15,10 +16,13 @@ const CommentInput = ({ onClose }: Props) => {
         }, 600)
     }, [])
 
-    const onSendComment = async () => {}
+    const onSendComment = async () => {
+      if(!value) return
+    }
   return (
     <div className={styles.root}>
       <NavBar
+        className="nav"
         onLeftClick={onClose}
         extra={
           <span className="publish" onClick={onSendComment}>
@@ -26,7 +30,7 @@ const CommentInput = ({ onClose }: Props) => {
           </span>
         }
       >
-        '评论文章'
+        评论文章
       </NavBar>
 
       <div className="input-area">

@@ -3,6 +3,9 @@
     background-color: #fff;
   
     :global {
+      .nav .right{
+        padding: 0;
+      }
       .publish {
         color: #fc6627;
         font-size: 17px;
