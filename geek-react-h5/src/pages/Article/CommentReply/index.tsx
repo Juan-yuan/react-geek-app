@@ -11,7 +11,7 @@ type Props = {
     articleId?: string
     onClose?: () => void
 }
-const Reply = ({ articleId, onClose }: Props) => {
+const CommentReply = ({ articleId, onClose }: Props) => {
 
   return (
     <div className={styles.root}>
@@ -35,4 +35,4 @@ const Reply = ({ articleId, onClose }: Props) => {
   )
 }
 
-export default Reply
+export default CommentReply

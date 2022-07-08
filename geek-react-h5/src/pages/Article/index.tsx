@@ -20,6 +20,7 @@ import Sticky from '@/components/Sticky'
 import Share from './Share'
 import { Drawer } from 'antd-mobile'
 import CommentInput from './CommentInput'
+import CommentReply from './CommentReply'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -29,6 +30,10 @@ const Article = () => {
     const dispatch = useDispatch()
     const commentRef = useRef<HTMLDivElement>(null)
     const isShowComment = useRef(false)
+    const [showReply, setShowReply] = useState({
+        visible: false,
+        originComment: {},
+    })
     useEffect(() => {
         dispatch(getArticleDetail(id))
     }, [dispatch, id])
@@ -86,6 +91,12 @@ const Article = () => {
     const closeComment = () => {
         setShowComment({
             visible:false
+        })
+    }
+    const closeReply = () => {
+        setShowReply({
+            visible: false,
+            originComment: {},
         })
     }
     return (
@@ -182,6 +193,21 @@ const Article = () => {
                 }
                 open={showComment.visible}
                 onOpenChange={closeComment}
+            ></Drawer>
+
+            <Drawer
+                className="drawer"
+                position="right"
+                // children={''}
+                sidebar={
+                    <div className="drawer-sidebar-wrapper">
+                        {showReply.visible && (
+                            <CommentReply />
+                        )}
+                    </div>
+                }
+                open={showReply.visible}
+                onOpenChange={closeReply}
             ></Drawer>
         </div>
     )
