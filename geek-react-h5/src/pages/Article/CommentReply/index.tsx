@@ -22,6 +22,16 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
     results: [] as Comment[],
     total_count: 0,
   })
+  
+  const [drawerStatus, setDrawerStatus] = useState({
+    visible: false
+})
+
+  const onCloseComment = () => {
+    setDrawerStatus({
+      visible: false,
+    })
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +82,16 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
           <InfiniteScroll hasMore={hasMore} loadMore={loadMore}></InfiniteScroll>
         </div>
 
-        <CommentFooter type="reply" />
+        <CommentFooter type="reply" onComment={() => setDrawerStatus({visible: true})} />
+          {
+            drawerStatus.visible && (
+              <CommentInput 
+                aritcleId={articleId!}
+                onClose={onCloseComment}
+                name={originComment.aut_name}
+              />
+            )
+          }
       </div>
     </div>
   )

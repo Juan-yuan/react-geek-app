@@ -7,8 +7,9 @@ import { addComment } from '@/store/actions/article'
 type Props = {
     onClose: () => void
     aritcleId: string
+    name?: string
 }
-const CommentInput = ({ onClose, aritcleId }: Props) => {
+const CommentInput = ({ onClose, aritcleId, name }: Props) => {
     const [value, setValue] = useState('')
     const txtRef = useRef<HTMLTextAreaElement>(null)
 
@@ -40,6 +41,7 @@ const CommentInput = ({ onClose, aritcleId }: Props) => {
       </NavBar>
 
       <div className="input-area">
+        { name && <div className="at">@{name}:</div>}
         <textarea
           ref={txtRef}
           placeholder="说点什么~"
