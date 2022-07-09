@@ -99,6 +99,13 @@ const Article = () => {
             originComment: {},
         })
     }
+    const onShowReply = (comment: Comment) => {
+        setShowReply({
+            visible: true,
+            originComment: comment
+        })
+    }
+    console.log("showReply", showReply.visible)
     return (
         <div className={styles.root}>
             <div className="root-wrapper">
@@ -157,7 +164,7 @@ const Article = () => {
                             </Sticky>
                             {
                                 detail.comm_count === 0 ? (<NoComment />) : (
-                                    comment.results?.map((item) => <CommentItem key={item.com_id} comment={item} />)
+                                    comment.results?.map((item) => <CommentItem key={item.com_id} comment={item} onReply={onShowReply} />)
                                 )
                             }
                             <InfiniteScroll hasMore={hasMore} loadMore={loadMore}></InfiniteScroll>
@@ -183,7 +190,6 @@ const Article = () => {
             <Drawer
                 className="drawer"
                 position="bottom"
-                // children={''}
                 sidebar={
                     <div className="drawer-sidebar-wrapper">
                         {showComment.visible && (
@@ -194,21 +200,7 @@ const Article = () => {
                 open={showComment.visible}
                 onOpenChange={closeComment}
             ></Drawer>
-
-            <Drawer
-                className="drawer"
-                position="right"
-                // children={''}
-                sidebar={
-                    <div className="drawer-sidebar-wrapper">
-                        {showReply.visible && (
-                            <CommentReply />
-                        )}
-                    </div>
-                }
-                open={showReply.visible}
-                onOpenChange={closeReply}
-            ></Drawer>
+            {showReply.visible && <CommentReply articleId={detail.art_id} />}
         </div>
     )
 }

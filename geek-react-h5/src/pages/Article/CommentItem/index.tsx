@@ -1,13 +1,14 @@
 import Icon from '@/components/Icon'
-import classnames from 'classnames'
 import styles from './index.module.scss'
 import { Comment } from '@/store/reducer/article'
 import dayjs from 'dayjs'
  
 type Props = {
     comment: Comment
+    onReply: (comment:any) => void
 }
-const CommentItem = ({comment}: Props) => {
+const CommentItem = ({comment, onReply}: Props) => {
+
     return (
         <div className={styles.root}>
             <div className="avatar">
@@ -28,7 +29,7 @@ const CommentItem = ({comment}: Props) => {
                 <div className="comment-content">{comment.content}</div>
 
                 <div className="comment-footer">
-                    <span className="replay">
+                    <span className="replay"  onClick={() => onReply(comment)}>
                         {comment.reply_count}回复 <Icon type="iconbtn_right" />
                     </span>
 
