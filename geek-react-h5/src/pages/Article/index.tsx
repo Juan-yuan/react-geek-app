@@ -200,7 +200,7 @@ const Article = () => {
                 open={showComment.visible}
                 onOpenChange={closeComment}
             ></Drawer>
-            {showReply.visible && <CommentReply originComment={showReply.originComment} onClose={closeReply} />}
+            {showReply.visible && <CommentReply originComment={showReply.originComment} onClose={closeReply} articleId={detail.art_id} />}
         </div>
     )
 }
