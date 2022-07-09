@@ -72,6 +72,7 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
     })
     setReplyList({
       ...replyList,
+      total_count: replyList.total_count + 1,
       results: [res.data.new_obj, ...replyList.results]
     })
     dispatch(updateComment({
@@ -84,7 +85,7 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
     <div className={styles.root}>
       <div className="reply-wrapper">
         <NavBar className="transparent-navbar" onLeftClick={onClose}>
-          <div>{originComment.reply_count}条回复</div>
+          <div>{replyList.total_count}条回复</div>
         </NavBar>
 
         <div className="origin-comment">
