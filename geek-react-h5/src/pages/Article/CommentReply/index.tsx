@@ -59,20 +59,20 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
         </NavBar>
 
         <div className="origin-comment">
-          <CommentItem comment={originComment} ></CommentItem>
+          <CommentItem comment={originComment} type="reply"></CommentItem>
         </div>
 
         <div className="reply-list">
           <div className="reply-header">全部回复</div>
           {
             originComment.reply_count === 0 ? (<NoneComment />) : (replyList.results.map(item => (
-              <CommentItem comment={item} key={item.com_id}></CommentItem>
+              <CommentItem comment={item} key={item.com_id} type="reply"></CommentItem>
             ))
           )}
           <InfiniteScroll hasMore={hasMore} loadMore={loadMore}></InfiniteScroll>
         </div>
 
-        <CommentFooter />
+        <CommentFooter type="reply" />
       </div>
     </div>
   )

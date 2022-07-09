@@ -8,8 +8,9 @@ type Props = {
   goComment?: () => void
   onShare?: () => void
   onComment?: () => void
+  type?: string
 }
-const CommentFooter = ({goComment, onShare, onComment}:Props )=> {
+const CommentFooter = ({goComment, onShare, onComment, type='normal'}:Props )=> {
   const { detail } = useSelector((state: RootState) => state.article)
   const dispatch = useDispatch()
   const onLike = async () => {
@@ -26,7 +27,9 @@ const CommentFooter = ({goComment, onShare, onComment}:Props )=> {
         <Icon type="iconbianji" />
         <span>去评论</span>
       </div>
-        <>
+      {
+        type === 'reply' ? null : (
+          <>
           <div className="action-item" onClick={goComment}>
             <Icon type="iconbtn_comment" />
             <p>评论</p>
@@ -39,6 +42,9 @@ const CommentFooter = ({goComment, onShare, onComment}:Props )=> {
             <p>点赞</p>
           </div>
         </>
+        )
+      }
+        
 
       <div className="action-item" onClick={collect}>
         <Icon type={detail.is_collected ? 'iconbtn_collect_sel' : 'iconbtn_collect'} />
