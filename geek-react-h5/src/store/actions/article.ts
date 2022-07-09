@@ -1,5 +1,7 @@
+import { ArticleAction } from './../reducer/article';
 import { RootThunkAction } from ".."
 import request from '@/utils/request'
+import { Comment } from '../reducer/article'
 
 export function getArticleDetail(id: string): RootThunkAction {
     return async (dispatch) => {
@@ -80,5 +82,12 @@ export function addComment(aritcleId: string, content: string):RootThunkAction {
             payload: res.data.new_obj
         })
         dispatch(getArticleDetail(getState().article.detail.art_id))
+    }
+}
+
+export function updateComment(comment: Comment):ArticleAction {
+    return {
+        type: 'article/updateComment',
+        payload: comment,
     }
 }

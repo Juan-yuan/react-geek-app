@@ -9,6 +9,8 @@ import styles from './index.module.scss'
 import { Comment } from '@/store/reducer/article'
 import request from '@/utils/request'
 import { InfiniteScroll } from 'antd-mobile-v5'
+import { useDispatch } from 'react-redux'
+import { updateComment } from '@/store/actions/article'
 
 type Props = {
     articleId?: string
@@ -16,6 +18,7 @@ type Props = {
     originComment: Comment
 }
 const CommentReply = ({ articleId, onClose, originComment }: Props) => {
+  const dispatch = useDispatch()
   const [replyList, setReplyList] = useState({
     end_id: '',
     last_id: '',
@@ -71,6 +74,10 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
       ...replyList,
       results: [res.data.new_obj, ...replyList.results]
     })
+    dispatch(updateComment({
+      ...originComment,
+      reply_count: originComment.reply_count + 1
+    }))
   }
 
   return (
