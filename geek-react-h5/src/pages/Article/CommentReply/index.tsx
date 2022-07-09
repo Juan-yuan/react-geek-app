@@ -61,6 +61,18 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
     })
   }
 
+  const onAddReply = async (content: string) => {
+    const res = await request.post('/comments', {
+      target: originComment.com_id,
+      content,
+      art_id: articleId
+    })
+    setReplyList({
+      ...replyList,
+      results: [res.data.new_obj, ...replyList.results]
+    })
+  }
+
   return (
     <div className={styles.root}>
       <div className="reply-wrapper">
@@ -89,6 +101,7 @@ const CommentReply = ({ articleId, onClose, originComment }: Props) => {
                 aritcleId={articleId!}
                 onClose={onCloseComment}
                 name={originComment.aut_name}
+                onAddReply={onAddReply}
               />
             )
           }

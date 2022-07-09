@@ -8,8 +8,9 @@ type Props = {
     onClose: () => void
     aritcleId: string
     name?: string
+    onAddReply?: (content: string) => void
 }
-const CommentInput = ({ onClose, aritcleId, name }: Props) => {
+const CommentInput = ({ onClose, aritcleId, name, onAddReply }: Props) => {
     const [value, setValue] = useState('')
     const txtRef = useRef<HTMLTextAreaElement>(null)
 
@@ -22,9 +23,14 @@ const CommentInput = ({ onClose, aritcleId, name }: Props) => {
     const dispatch = useDispatch()
     const onSendComment = async () => {
       if(!value) return
-      
-      await dispatch(addComment(aritcleId, value))
+
+      if(name) {
+        onAddReply && onAddReply(value)
+        onClose()
+      } else {
+        await dispatch(addComment(aritcleId, value))
       onClose()
+      }           
     }
   return (
     <div className={styles.root}>
@@ -37,7 +43,7 @@ const CommentInput = ({ onClose, aritcleId, name }: Props) => {
           </span>
         }
       >
-        评论文章
+        { name ? '回复评论' : '评论文章'}
       </NavBar>
 
       <div className="input-area">
