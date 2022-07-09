@@ -21,6 +21,7 @@ import Share from './Share'
 import { Drawer } from 'antd-mobile'
 import CommentInput from './CommentInput'
 import CommentReply from './CommentReply'
+import { Comment } from '@/store/reducer/article'
 
 const Article = () => {
     const [isShowAuthor, setIsShowAuthor] = useState(false)
@@ -32,7 +33,7 @@ const Article = () => {
     const isShowComment = useRef(false)
     const [showReply, setShowReply] = useState({
         visible: false,
-        originComment: {},
+        originComment: {} as Comment,
     })
     useEffect(() => {
         dispatch(getArticleDetail(id))
@@ -96,7 +97,7 @@ const Article = () => {
     const closeReply = () => {
         setShowReply({
             visible: false,
-            originComment: {},
+            originComment: {} as Comment,
         })
     }
     const onShowReply = (comment: Comment) => {
@@ -105,7 +106,6 @@ const Article = () => {
             originComment: comment
         })
     }
-    console.log("showReply", showReply.visible)
     return (
         <div className={styles.root}>
             <div className="root-wrapper">
@@ -200,7 +200,7 @@ const Article = () => {
                 open={showComment.visible}
                 onOpenChange={closeComment}
             ></Drawer>
-            {showReply.visible && <CommentReply articleId={detail.art_id} />}
+            {showReply.visible && <CommentReply originComment={showReply.originComment} onClose={closeReply} />}
         </div>
     )
 }

@@ -6,22 +6,24 @@ import CommentFooter from '../CommentFooter'
 import CommentInput from '../CommentInput'
 import CommentItem from '../CommentItem'
 import styles from './index.module.scss'
+import { Comment } from '@/store/reducer/article'
 
 type Props = {
     articleId?: string
     onClose?: () => void
+    originComment: Comment
 }
-const CommentReply = ({ articleId, onClose }: Props) => {
+const CommentReply = ({ articleId, onClose, originComment }: Props) => {
 
   return (
     <div className={styles.root}>
       <div className="reply-wrapper">
         <NavBar className="transparent-navbar" onLeftClick={onClose}>
-          <div>{0}条回复</div>
+          <div>{originComment.reply_count}条回复</div>
         </NavBar>
 
         <div className="origin-comment">
-          原评论
+          <CommentItem comment={originComment} ></CommentItem>
         </div>
 
         <div className="reply-list">

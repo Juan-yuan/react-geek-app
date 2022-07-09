@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
  
 type Props = {
     comment: Comment
-    onReply: (comment:any) => void
+    onReply?: (comment:any) => void
 }
 const CommentItem = ({comment, onReply}: Props) => {
 
@@ -29,7 +29,7 @@ const CommentItem = ({comment, onReply}: Props) => {
                 <div className="comment-content">{comment.content}</div>
 
                 <div className="comment-footer">
-                    <span className="replay"  onClick={() => onReply(comment)}>
+                    <span className="replay"  onClick={() => onReply && onReply(comment)}>
                         {comment.reply_count}回复 <Icon type="iconbtn_right" />
                     </span>
 
