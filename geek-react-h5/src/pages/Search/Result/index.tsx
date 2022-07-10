@@ -1,7 +1,7 @@
 import NavBar from '@/components/NavBar'
 import styles from './index.module.scss'
 import { useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSearchResults } from '@/store/actions/search'
 import { RootState } from '@/store'

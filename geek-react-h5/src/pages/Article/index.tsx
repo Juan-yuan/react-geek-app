@@ -65,7 +65,7 @@ const Article = () => {
 
     useEffect(() => {
         dispatch(getCommentList(id))
-    }, [dispatch, detail])
+    }, [dispatch, id])
 
     const hasMore = comment.last_id !== comment.end_id
     const loadMore = async () => {
