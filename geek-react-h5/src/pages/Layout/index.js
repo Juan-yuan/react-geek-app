@@ -4,6 +4,8 @@ import styles from './index.module.scss'
 import { useHistory, useLocation, Switch, Route } from 'react-router-dom'
 import classNames from 'classnames'
 import AuthRoute from '@/components/AuthRoute'
+import KeepAlive from '@/components/KeepAlive'
+
 const Home = React.lazy(() => import('@/pages/Home')) 
 const QA = React.lazy(() => import('@/pages/QA')) 
 const Video = React.lazy(() => import('@/pages/Video')) 
@@ -13,7 +15,7 @@ const tabBar = [
   {
     title: '首页',
     icon: 'iconbtn_home',
-    path: '/home'
+    path: '/home/index'
   },
   {
     title: '问答',
@@ -39,8 +41,9 @@ export default function Layout() {
     <div className={styles.root}>
       <div className="tab-content">
         <React.Suspense fallback={<div>loading...</div>}>
+          <KeepAlive alivePath="/home/index" path="/home/index" component={Home}></KeepAlive>
           <Switch>
-            <Route path="/home" component={Home} exact></Route>
+            {/* <Route path="/home" component={Home} exact></Route> */}
             <Route path="/home/qa" component={QA}></Route>
             <Route path="/home/video" component={Video}></Route>
             <AuthRoute path="/home/profile" component={Profile}></AuthRoute>
