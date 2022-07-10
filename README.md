@@ -3,10 +3,12 @@ The technology of the project used Function component, Hooks, Redux, Redux-thunk
 
 1. How to run this project
 clone project：
-
 git clone https://github.com/Juan-yuan/react-geek-app
+
+
 install：
 yarn install
 
 project start：
-yarn start
+* cd geek-react-h5/
+* yarn start
