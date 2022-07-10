@@ -166,7 +166,7 @@ export default function Profile() {
             className="drawer"
             sidebar={open.visible && <EditInput onClose={onClose} type={open.type} onCommit={onCommit} />} 
             open={open.visible}
-        >{''}</Drawer>
+        />
 
         {/* Drawer component image & gender*/}
         <Drawer
@@ -175,7 +175,7 @@ export default function Profile() {
             sidebar={listOpen.visible && <EditList config={config} onClose={onClose} type={listOpen.type} ></EditList>}
             open={listOpen.visible}
             onOpenChange={onClose}
-        >{''}</Drawer>
+        />
     </div>
   )
 }

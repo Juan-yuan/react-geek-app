@@ -2,7 +2,8 @@ const {
   override,
   fixBabelImports,
   addWebpackAlias,
-  addPostcssPlugins
+  addPostcssPlugins,
+  addWebpackExternals
 } = require('customize-cra')
 const px2viewport = require('postcss-px-to-viewport')
 const path = require('path')
@@ -23,4 +24,12 @@ const postcssPlugins = addPostcssPlugins([
   }),
 ])
 
-module.exports = override( babelPlugin, alias, postcssPlugins )
+const obj = process.env.NODE_ENV === 'production' ? {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+} : {}
+
+const externals = addWebpackExternals(obj)
+
+
+module.exports = override( externals, babelPlugin, alias, postcssPlugins )

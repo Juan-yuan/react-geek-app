@@ -1,6 +1,5 @@
 import NavBar from '@/components/NavBar'
 import NoneComment from '../NoComment'
-import { Drawer } from 'antd-mobile'
 import { useEffect, useState } from 'react'
 import CommentFooter from '../CommentFooter'
 import CommentInput from '../CommentInput'

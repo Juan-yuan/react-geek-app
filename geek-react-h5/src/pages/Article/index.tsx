@@ -181,11 +181,10 @@ const Article = () => {
                 className="drawer-share"
                 position="bottom"
                 style={{minHeight: document.documentElement.clientHeight}}
-                // children={''}
                 sidebar={<Share onClose={onCloseShare} />}
                 open={share}
                 onOpenChange={onCloseShare}
-            ></Drawer>
+            />
 
             <Drawer
                 className="drawer"
@@ -199,7 +198,7 @@ const Article = () => {
                 }
                 open={showComment.visible}
                 onOpenChange={closeComment}
-            ></Drawer>
+            />
             {showReply.visible && <CommentReply originComment={showReply.originComment} onClose={closeReply} articleId={detail.art_id} />}
         </div>
     )
