@@ -16,7 +16,7 @@ export default function Index() {
     })
     useEffect(() => {
         if( time === 0) {
-            history.push('/home')
+            history.push('/home/index')
         }
     }, [time, history])
   return (

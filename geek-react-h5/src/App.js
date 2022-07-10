@@ -45,7 +45,11 @@ export default function App() {
                 <AuthRoute path="/profile/chat" component={ProfileChat}></AuthRoute>
                 <AuthRoute path="/profile/feedback" component={ProfileFeedback}></AuthRoute>
 
-                {/* <Route component={NotFound}></Route> */}
+                <Route render={props => {
+                  if(!props.location.pathname.startsWith('/home')) {
+                    return <NotFound/>
+                  }
+                }}></Route>
             </Switch>
           </Suspense>
       </div>
